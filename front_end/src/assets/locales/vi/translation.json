@@ -1,0 +1,15 @@
+{
+    "login": {
+        "title": "Đăng nhập",
+        "invalidUsername": "Tên đăng nhập phải dài hơn 2 ký tự ",
+        "invalidPassword": "Mật khẩu phải dài hơn 6 ký tự",
+        "username": "Tên đăng nhập",
+        "usernamePlaceholder": "Nhập tên đăng nhập của bạn",
+        "password": "Mật khẩu",
+        "passwordPlaceholder": "Nhập mật khẩu",
+        "submit": "Đăng nhập",
+        "success": "Đăng nhập thành công",
+        "error": "Đăng nhập thất bại",
+        "email":"Email"
+    }
+}

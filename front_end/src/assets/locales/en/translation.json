@@ -1,0 +1,15 @@
+{
+    "login": {
+        "title": "Login",
+        "invalidUsername": "Must be 6 or more characters long",
+        "invalidPassword": "Must be 6 or more characters long",
+        "username": "Username",
+        "usernamePlaceholder": "Enter your username",
+        "password": "Password",
+        "passwordPlaceholder": "Enter your password",
+        "submit": "Login",
+        "success": "Logged in successfully",
+        "error": "Falied to login",
+        "email":"Email"
+    }
+}
