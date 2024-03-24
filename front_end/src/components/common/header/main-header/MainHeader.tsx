@@ -1,5 +1,4 @@
 import Logo from "@/components/common/logo/Logo"
-import { Separator } from "@/components/ui/separator"
 import MaxWidthWrapper from "../../MaxWidthWrapper"
 import { FormInput } from "../../custom_input/CustomInput"
 import { useForm } from "react-hook-form"
@@ -23,24 +22,30 @@ import { routerPaths } from "@/routes/path"
 import { Search } from 'lucide-react';
 import { PlusCircle } from 'lucide-react';
 import { Folder } from "lucide-react"
+import { useState } from "react"
+import { useSelector } from "react-redux"
+import UserPopover from "@/components/auth/user-popover/UserPopover"
 const MainHeader = () => {
+    const { loggedIn } = useSelector((state: any) => state.Auth)
+    const [openDialogLogin, setOpenDialogLogin] = useState(false)
+    const [openDialogRegister, setOpenDialogRegister] = useState(false)
     const form = useForm()
     const onSubmit = (data: any) => {
 
     }
     return (
         <div className='hidden md:block md:w-full h-20'>
-            <div className='w-full p-6 grid grid-flow-row md:grid-cols-12 items-center'>
-                <div className="flex items-center row-span-1 md:col-span-1">
+            <div className='w-full p-6 flex justify-between items-center'>
+                <div className="w-1/6 flex items-center row-span-1 md:col-span-1">
                     <Logo />
-                    <Button variant={"ghost"}>
+                    <Button variant={"link"}>
                         <Link to={routerPaths.HOME}>Home</Link>
                     </Button>
-                    <Button variant={"ghost"}>Your library</Button>
+                    <Button variant={"link"} className="w-fit">Your library</Button>
                 </div>
-                <MaxWidthWrapper className="row-span-12 md:col-span-10">
+                <MaxWidthWrapper >
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                        <form className="" onSubmit={form.handleSubmit(onSubmit)}>
                             <FormInput
                                 control={form.control}
                                 fieldName="search"
@@ -54,12 +59,26 @@ const MainHeader = () => {
                         </form>
                     </Form>
                 </MaxWidthWrapper>
-                <div className="col-span-1 flex justify-between gap-1">
+                {/* <Form {...form}>
+                    <form className="!w-3/6 p-0" onSubmit={form.handleSubmit(onSubmit)}>
+                        <FormInput
+                            control={form.control}
+                            fieldName="search"
+                            // label="Search"
+                            placeholder="Search"
+                            type="text"
+                            className="w-full"
+                            icon={<Search />}
+                            alignIcon="left"
+                        />
+                    </form>
+                </Form> */}
+                <div className="w-1/6 flex justify-end gap-1">
                     <Popover>
                         <PopoverTrigger className="text-sm p-1">
                             <PlusCircle />
                         </PopoverTrigger>
-                        <PopoverContent>
+                        <PopoverContent className="w-fit">
                             <div className="grid gap-4">
                                 <div className="grid gap-2">
                                     <div className="grid grid-cols-3 items-center gap-4">
@@ -84,26 +103,35 @@ const MainHeader = () => {
                             </div>
                         </PopoverContent>
                     </Popover>
-
-                    <Dialog>
-                        <DialogTrigger className="rounded-sm text-sm p-1 w-fit font-semibold  bg-background hover:dark:text-inherit">
-                            Sign in
-                        </DialogTrigger>
-                        <DialogContent>
-                            <LoginForm />
-                        </DialogContent>
-                    </Dialog>
-                    <Dialog>
-                        <DialogTrigger className="rounded-sm text-sm p-1 w-fit font-semibold  bg-background hover:dark:text-inherit">
-                            Sign up
-                        </DialogTrigger>
-                        <DialogContent>
-                            <RegisterForm />
-                        </DialogContent>
-                    </Dialog>
+                    {loggedIn
+                        ? (
+                            <>
+                                <UserPopover />
+                                <div></div>
+                            </>
+                        )
+                        : (
+                            <>
+                                <Dialog open={openDialogLogin} onOpenChange={setOpenDialogLogin}>
+                                    <DialogTrigger className="rounded-sm text-sm p-1 w-fit font-semibold  bg-background hover:dark:text-inherit">
+                                        Sign in
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <LoginForm setOpen={setOpenDialogLogin} />
+                                    </DialogContent>
+                                </Dialog>
+                                <Dialog open={openDialogRegister} onOpenChange={setOpenDialogRegister}>
+                                    <DialogTrigger className="rounded-sm text-sm p-1 w-fit font-semibold  bg-background hover:dark:text-inherit">
+                                        Sign up
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <RegisterForm setOpen={setOpenDialogRegister} />
+                                    </DialogContent>
+                                </Dialog>
+                            </>
+                        )}
                 </div>
             </div>
-            <Separator />
         </div>
     )
 }
