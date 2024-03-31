@@ -1,5 +1,17 @@
 import 'reflect-metadata';
-import 'module-alias/register';
+// import 'module-alias/register';
+import moduleAlias from 'module-alias';
+moduleAlias.addAliases({
+    "@src": `${__dirname}/`,
+    "@routers": `${__dirname}/routers`,
+    "@controllers": `${__dirname}/controllers`,
+    "@services": `${__dirname}/services`,
+    "@repositories": `${__dirname}/repositories`,
+    "@middleware": `${__dirname}/middleware`,
+    "@entity": `${__dirname}/entity`,
+    "@dto": `${__dirname}/dto`,
+    "@helper": `${__dirname}/helper`,
+});
 import express, { Application } from "express";
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -44,6 +56,18 @@ try {
 } catch (error) {
 
 }
+
+//cors
+app.use(cors(
+    {
+        origin: String(process.env.CLIENT_URL),
+        // credentials: true,
+    }
+));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // Passport
 app.use(session({
     secret: String(process.env.SESSION_KEY),
@@ -52,15 +76,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(cors(
-    {
-        origin: process.env.CLIENT_URL,
-        credentials: true,
-    }
-));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use('/api/auth', authRoutes)
 app.use('/api/user', userRouter)
 app.use('/passport', passportRouter)
