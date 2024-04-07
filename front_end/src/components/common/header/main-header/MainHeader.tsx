@@ -27,8 +27,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import UserPopover from "@/components/auth/user-popover/UserPopover"
 import { Send } from 'lucide-react';
 import Constants from "@/utils/Constants"
-import { getAllSetsAction } from "@/redux/public-sets/slice"
-import { toast } from "@/components/ui/use-toast";
 
 const MainHeader = (props: any) => {
     const { isAdmin } = props
@@ -38,27 +36,21 @@ const MainHeader = (props: any) => {
     const [openDialogLogin, setOpenDialogLogin] = useState(false)
     const [openDialogRegister, setOpenDialogRegister] = useState(false)
     const [showSubmit, setShowSubmit] = useState(false)
+
     const form = useForm()
     const onSubmit = (data: any) => {
-        dispatch({
-            type: getAllSetsAction.type,
-            payload: {
-                page_size: Constants.DEFAULT_PAGESIZE,
-                page_index: 1,
-                filter: Constants.SORT_BY[0].key,
-                name: data.search,
-                onSuccess: () => {
-                    navigate(`${routerPaths.PUBLIC_SETS}`)
-                },
-                onError: () => {
-                    navigate(`${routerPaths.PUBLIC_SETS}`)
-                    toast({
-                        title: 'No Set Found!',
-                        variant: 'destructive',
-                    })
-                }
-            }
-        })
+        const param: Record<string, string> = {
+            page_index: "1",
+            filter: Constants.SORT_BY[0].key,
+            name: data.search,
+        }
+        const queryParams = new URLSearchParams(param).toString();
+        if (isAdmin) {
+            navigate(`${routerPaths.ADMIN_SETS}?${queryParams}`);
+        }
+        else {
+            navigate(`${routerPaths.PUBLIC_SETS}?${queryParams}`);
+        }
     }
     const onTextChanged = (value: any) => {
         setShowSubmit(value.length > 0)
@@ -72,9 +64,13 @@ const MainHeader = (props: any) => {
                     <Button variant={"link"}>
                         <Link to={routerPaths.HOME}>Home</Link>
                     </Button>
-                    <Button variant={"link"} className="w-fit">Your library</Button>
+                    {/* <Button variant={"link"} className="w-fit">Your library</Button> */}
                 </div>
-                <MaxWidthWrapper >
+                {/* <MaxWidthWrapper >
+                   
+                </MaxWidthWrapper> */}
+                <div className="w-3/6">
+
                     <Form {...form}>
                         <form className="" onSubmit={form.handleSubmit(onSubmit)}>
                             <FormInput
@@ -95,7 +91,7 @@ const MainHeader = (props: any) => {
                             />
                         </form>
                     </Form>
-                </MaxWidthWrapper>
+                </div>
                 <div className="w-1/6 flex justify-end gap-1">
                     {isAdmin
                         ? <>

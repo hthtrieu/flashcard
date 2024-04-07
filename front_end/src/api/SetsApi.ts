@@ -19,3 +19,18 @@ export const GetSetByIdApi = async (id: string) => {
     const response = await AxiosConfig.get(`${BASE_URL}/${id}`);
     return response;
 }
+
+export const CreateSetApi = async (data: any) => {
+    const response = await AxiosConfig.post(`${BASE_URL}`, data);
+    return response;
+}
+
+export const EditSetApi = async ({ id, data }: { id: string, data: any }) => {
+    const response = await AxiosConfig.put(`${BASE_URL}/${id}`, data);
+    return response;
+}
+
+export const DeleteSetApi = async (id: string) => {
+    const response = await AxiosConfig.delete(`${BASE_URL}/${id}`);
+    return response;
+}

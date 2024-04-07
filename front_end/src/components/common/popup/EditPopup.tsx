@@ -15,8 +15,8 @@ import {
 import { isFunction } from "@/utils/Utils";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
-const DeletePopup = (props: any) => {
-    const { TriggerComponent, onConfirmDelete, onCancel } = props;
+const EditPopup = (props: any) => {
+    const { TriggerComponent, onConfirmEdit, onCancel } = props;
     const [open, setOpen] = useState(false)
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -27,7 +27,7 @@ const DeletePopup = (props: any) => {
                 <Card>
                     <CardHeader>
                         <CardTitle>
-                            Are you sure you want to delete?
+                            Are you sure you want to save all changes?
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -41,18 +41,18 @@ const DeletePopup = (props: any) => {
                                 setOpen(false)
                                 isFunction(onCancel) && onCancel()
                             }}
-                            variant={"secondary"}
+                            variant={"destructive"}
                         >
-                            Cancel
+                            No
                         </Button>
                         <Button
                             onClick={() => {
-                                isFunction(onConfirmDelete) && onConfirmDelete()
+                                isFunction(onConfirmEdit) && onConfirmEdit()
                                 setOpen(false)
                             }}
-                            variant={"destructive"}
+                            variant={"secondary"}
                         >
-                            <Trash2 />
+                            Yes
                         </Button>
                     </CardFooter>
                 </Card>
@@ -62,4 +62,4 @@ const DeletePopup = (props: any) => {
     )
 }
 
-export default DeletePopup
+export default EditPopup
