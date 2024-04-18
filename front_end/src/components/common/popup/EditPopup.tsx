@@ -12,7 +12,7 @@ import {
     CardTitle,
     CardDescription,
 } from "@/components/ui/card"
-import { isFunction } from "@/utils/Utils";
+import { isFunction } from "@/lib/utils";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 const EditPopup = (props: any) => {
@@ -30,11 +30,6 @@ const EditPopup = (props: any) => {
                             Are you sure you want to save all changes?
                         </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <CardDescription>
-                            This action cannot be undone.
-                        </CardDescription>
-                    </CardContent>
                     <CardFooter className="flex justify-center gap-6">
                         <Button
                             onClick={() => {

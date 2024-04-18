@@ -3,13 +3,13 @@ import { FormInput } from '@/components/common/custom_input/CustomInput'
 import { Button } from '@/components/ui/button'
 import { useForm } from 'react-hook-form'
 import { Form } from '@/components/ui/form'
-import Constants from '@/utils/Constants'
+import Constants from '@/lib/Constants'
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { CardTitle } from '@/components/ui/card'
-import { PlusCircle, PencilIcon } from 'lucide-react'
+import { PlusCircle, PencilIcon, CheckIcon } from 'lucide-react'
 import { useSelector, useDispatch } from 'react-redux'
-import { objectToFormData } from '@/utils/Utils'
+import { objectToFormData } from '@/lib/utils'
 import { editSetAction } from '@/redux/set/slice'
 import { getSetByIdAction } from "@/redux/set/slice";
 import { useParams } from "react-router-dom";
@@ -42,11 +42,6 @@ const EditSetContainer = () => {
         ]).optional(),
         is_delete_image: z.string().optional()
     });
-    useEffect(() => {
-        if (id) {
-            getSetById(id);
-        }
-    }, [id])
 
     const getSetById = (id: string) => {
         scrollTo(0, 0);
@@ -58,6 +53,12 @@ const EditSetContainer = () => {
             }
         })
     }
+
+    useEffect(() => {
+        if (id) {
+            getSetById(id);
+        }
+    }, [id])
 
     const onEditCard = (values: any, id: string, setId: string) => {
         const submitValues = {
@@ -214,7 +215,7 @@ const EditSetContainer = () => {
                                 <Button
                                     type='button'
                                     variant={"ghost"}>
-                                    <PencilIcon width={20} />
+                                    <CheckIcon width={20} />
                                 </Button>
                             }
                             onConfirmEdit={form.handleSubmit(onSubmitSet)}
@@ -247,28 +248,6 @@ const EditSetContainer = () => {
                 </form>
                 <div className='my-6 flex justify-between items-center '>
                     <b>Cards</b>
-                    <CommonPopup
-                        open={showCardFormPopup}
-                        setOpen={setShowCardFormPopup}
-                        isShowTrigger={true}
-                        TriggerComponent={
-                            <Button
-                                type='button'
-                                className='w-fit h-fit p-0'
-                                variant={"ghost"}><PlusCircle />
-                            </Button>
-                        }
-                        title="Add new card"
-                        children={
-                            <ScrollArea>
-                                <CardForm
-                                    isEdit={false}
-                                    setId={data?.id}
-                                    onCreateCard={onCreateCard}
-                                />
-                            </ScrollArea>
-                        }
-                    />
                 </div>
                 <div className='flex flex-col'>
                     <div className="w-full flex flex-col gap-6">
@@ -285,8 +264,29 @@ const EditSetContainer = () => {
                             })}
                     </div>
                     <div className='flex justify-center my-2'>
+                        <CommonPopup
+                            open={showCardFormPopup}
+                            setOpen={setShowCardFormPopup}
+                            isShowTrigger={true}
+                            TriggerComponent={
+                                <Button
+                                    type='button'
+                                    className='w-fit h-fit p-0'
+                                    variant={"ghost"}><PlusCircle />
+                                </Button>
+                            }
+                            title="Add new card"
+                            children={
+                                <ScrollArea>
+                                    <CardForm
+                                        isEdit={false}
+                                        setId={data?.id}
+                                        onCreateCard={onCreateCard}
+                                    />
+                                </ScrollArea>
+                            }
+                        />
                     </div>
-
                 </div>
             </Form >
         </div >

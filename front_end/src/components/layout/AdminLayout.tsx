@@ -10,41 +10,38 @@ import { getProfileAction } from '@/redux/auth/slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { routerPaths } from '@/routes/path';
-import Constants from '@/utils/Constants';
+import Constants from '@/lib/Constants';
 import { SidebarNav } from '../common/sidbar-nav/SidebarNav';
 import { Card } from "@/components/ui/card"
-import { SidebarNavItems } from "@/utils/Utils"
+import { SidebarNavItems } from "@/lib/utils"
+import { Outlet } from 'react-router-dom';
 type AdminLayoutProps = {
-    children: ReactNode;
+    children?: ReactNode;
 };
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { profile } = useSelector((state: any) => state.Auth);
+    // const { setAuth } = useAuth();
     const getProfile = () => {
         dispatch({
             type: getProfileAction.type,
             payload: {
-                onSuccess: () => {
-
+                onSuccess: (data: any) => {
+                    if (data) {
+                        // setAuth(data)
+                    }
                 },
                 onError: () => {
-                    navigate(routerPaths.HOME)
                 }
             }
         })
     }
     useEffect(() => {
-        if (profile) {
-            if (profile?.role !== Constants.ROLE.ADMIN) {
-                navigate(routerPaths.PUBLIC_SETS)
-            }
-        }
-        else {
-            getProfile();
-        }
-    }, [profile])
+
+        getProfile();
+    }, [])
 
     return (
         <div>
@@ -54,12 +51,18 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
                 <Separator />
             </div>
             <MaxWidthWrapper>
-                <div className='mt-2 md:mt-10 grid grid-rows-1 md:grid-cols-12 gap-10 min-h-40'>
+                <div className='mt-2 md:mt-10 grid grid-rows-1 md:grid-cols-12 gap-10 min-h-[70vh]'>
                     <div className='row-span-1 md:col-span-2'>
                         <SidebarNav items={SidebarNavItems} className='md:fixed ' />
                     </div>
                     <Card className='row-span-1 px-3 md:col-span-10 md:ml-6 md:px-6'>
-                        {children}
+                        {/* {children} */}
+                        {
+                            profile
+                            &&
+                            <Outlet />
+                        }
+
                     </Card>
                 </div>
                 <div className='fixed bottom-10 right-10'><ModeToggle /></div>

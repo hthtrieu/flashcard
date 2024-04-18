@@ -1,14 +1,14 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import DeletePopup from "@/components/common/popup/DeletePopup"
-import { Trash2, PencilIcon, PlusCircleIcon } from "lucide-react"
+import { Trash2, PencilIcon, PlusCircleIcon, CheckIcon } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { FormInput } from "@/components/common/custom_input/CustomInput"
 import { useForm, useFieldArray } from "react-hook-form"
 import { Form } from "@/components/ui/form"
-import Constants from "@/utils/Constants"
+import Constants from "@/lib/Constants"
 import EditPopup from '@/components/common/popup/EditPopup'
-import { isFunction } from "@/utils/Utils"
+import { isFunction } from "@/lib/utils"
 import { z } from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -81,7 +81,7 @@ const CardForm = (props: any) => {
                                                 }}
                                                 TriggerComponent={
                                                     <Button type='button' variant={'ghost'}>
-                                                        <PencilIcon width={20} />
+                                                        <CheckIcon width={20} />
                                                     </Button>
                                                 }
                                             />
@@ -94,13 +94,7 @@ const CardForm = (props: any) => {
                                         </div>
                                     </>
                                     : <>
-                                        <div className="w-full flex justify-end mb-2">
-                                            <Button
-                                                type="submit"
-                                                variant={'secondary'}>
-                                                Save
-                                            </Button>
-                                        </div>
+
                                     </>}
 
                             </div>
@@ -174,9 +168,20 @@ const CardForm = (props: any) => {
                                 </div>
                             )
                         })}
-                    </Card>
-                </form>
-            </Form>
+                        {
+                            !isEdit &&
+                            <Button
+                                type="submit"
+                                variant={'default'}
+                                className="w-full my-6"
+                            >
+                                Save
+                            </Button>
+                        }
+
+                    </Card >
+                </form >
+            </Form >
         </>
     )
 }
