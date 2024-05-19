@@ -14,9 +14,10 @@ import { objectToFormData } from '@/lib/utils'
 import { createSetAction } from '@/redux/set/slice'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { CardTitle } from '@/components/ui/card'
-
+import LoadingSpinner from '@/components/common/loading/loading-spinner/LoadingSpinner'
+import LoadingPopup from '@/components/common/loading/loading-popup/LoadingPopup'
 const TestListPage = () => {
-    const { data, pagination } = useSelector((state: any) => state.Sets)
+    const { data, pagination, isLoading } = useSelector((state: any) => state.Sets)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [open, setOpen] = useState(false)
@@ -72,6 +73,11 @@ const TestListPage = () => {
             <div className='flex justify-between mt-6'>
                 <CardTitle >Questions of Set</CardTitle>
             </div>
+            {/* {
+                isLoading
+                    ? <div className='w-full h-full flex justify-center items-center'><LoadingSpinner /></div>
+                    : <> */}
+            <LoadingPopup open={isLoading} />
             {Array.isArray(data) && data.map((set, index) => {
                 return <div key={index} className='row-span-1 md:col-span-2'>
                     <TestCard
@@ -87,6 +93,8 @@ const TestListPage = () => {
                 onChange={(e: any) => { onChangePageNumber(e) }}
                 page={pageNumber}
             />
+            {/* </>
+            } */}
         </div>
     )
 }

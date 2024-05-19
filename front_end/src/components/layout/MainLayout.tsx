@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { ModeToggle } from '@/components/themes/ModeToggle';
 // import LocalesToggle from '../common/locales_toggle/LocalesToggle';
 import MainHeader from '../common/header/main-header/MainHeader';
@@ -7,17 +7,35 @@ import MaxWidthWrapper from '../common/MaxWidthWrapper';
 import Footer from '../common/footer/Footer';
 import { Separator } from '../ui/separator';
 import { Outlet } from 'react-router-dom';
+import { loginSuccessWithOauthAction } from "@/redux/auth/slice"
+import { useDispatch } from 'react-redux';
+
 type MainLayoutProps = {
     children?: ReactNode;
 };
 
 const MainLayout = ({ children }: MainLayoutProps) => {
+    const dispatch = useDispatch();
+    const loginSuccessWithOauth = () => {
+        dispatch({
+            type: loginSuccessWithOauthAction.type,
+            payload: {
+
+            }
+        })
+    }
+    useEffect(() => {
+        loginSuccessWithOauth()
+    }, [])
+
     return (
         <div>
             {/* <div className='fixed right-10 top-5'><LocalesToggle /> </div> */}
             <div className='sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-                <MainHeaderMobile />
-                <MainHeader />
+                <MaxWidthWrapper className=''>
+                    <MainHeaderMobile />
+                    <MainHeader className="p-0" />
+                </MaxWidthWrapper>
                 <Separator />
             </div>
             <MaxWidthWrapper>

@@ -6,7 +6,9 @@ import PublicSetsSaga from '@/redux/public-sets/saga';
 import SetSaga from '@/redux/set/saga';
 import CardSaga from '@/redux/card/saga';
 import QuestionSaga from '@/redux/question/saga';
-
+import UserSetsSaga from "@/redux/user-sets/saga";
+import UserCardSaga from '@/redux/user-cards/saga';
+import UserProfileSaga from '@/redux/user-profile/saga';
 export default function* rootSaga() {
     yield all([
         TestSaga(),
@@ -16,5 +18,8 @@ export default function* rootSaga() {
         SetSaga(),
         CardSaga(),
         QuestionSaga(),
+        UserSetsSaga(),
+        UserCardSaga(),
+        UserProfileSaga(),
     ])
 }

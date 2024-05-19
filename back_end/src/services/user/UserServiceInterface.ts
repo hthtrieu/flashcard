@@ -1,6 +1,9 @@
-import { Request } from "express";
+import { EditUserProfileRequest } from "@src/dto/user";
+import { Request, Response } from "express";
 
-interface UserServiceInterface {
-    upload_avatar: (user: any, imagePath: string) => Promise<any>;
+export interface UserServiceInterface {
+
+    editProfile: (data: EditUserProfileRequest) => Promise<any>;
+
+    changePassword: (userId: any, data: any) => Promise<any>;
 }
-export = UserServiceInterface;

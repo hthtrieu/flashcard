@@ -22,17 +22,17 @@ import { routerPaths } from "@/routes/path"
 import { Search } from 'lucide-react';
 import { PlusCircle } from 'lucide-react';
 import { Folder } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSelector, useDispatch } from 'react-redux';
 import UserPopover from "@/components/auth/user-popover/UserPopover"
 import { Send } from 'lucide-react';
 import Constants from "@/lib/Constants"
-
+import { logoutAction } from "@/redux/auth/slice"
 const MainHeader = (props: any) => {
-    const { isAdmin } = props
+    const { isAdmin, className } = props
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { loggedIn } = useSelector((state: any) => state.Auth)
+    const { loggedIn, profile } = useSelector((state: any) => state.Auth)
     const [openDialogLogin, setOpenDialogLogin] = useState(false)
     const [openDialogRegister, setOpenDialogRegister] = useState(false)
     const [showSubmit, setShowSubmit] = useState(false)
@@ -58,13 +58,27 @@ const MainHeader = (props: any) => {
 
     return (
         <div className='hidden md:block md:w-full h-20'>
-            <div className='w-full p-6 flex justify-between items-center'>
+            <div className='w-full py-6 flex justify-between items-center'>
                 <div className="w-1/6 flex items-center row-span-1 md:col-span-1">
                     <Logo />
                     <Button variant={"link"}>
                         <Link to={routerPaths.HOME}>Home</Link>
                     </Button>
-                    {/* <Button variant={"link"} className="w-fit">Your library</Button> */}
+                    {
+                        loggedIn ?
+                            (profile?.role === Constants.ROLE.ADMIN) ? <>
+                                <Button variant={"link"} className="w-fit">
+                                    <Link to={routerPaths.ADMIN}>Admin site</Link>
+                                </Button>
+                            </>
+                                : <>
+                                    <Button variant={"link"} className="w-fit">
+                                        <Link to={routerPaths.USER_SETS}>My sets</Link>
+                                    </Button>
+
+                                </>
+                            : null
+                    }
                 </div>
                 {/* <MaxWidthWrapper >
                    

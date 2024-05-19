@@ -99,7 +99,7 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({
         <>
             <div
                 {...getRootProps({
-                    className: `relative overflow-hidden flex flex-col items-center justify-center w-full border-[1px] border-dashed rounded-lg `,
+                    className: `relative overflow-hidden flex flex-col items-center justify-center w-full border-[1px] rounded-lg `,
                 })}
             >
                 <div
@@ -130,6 +130,7 @@ export const FileDropzone: React.FC<FileDropzoneProps> = ({
                         onKeyUp={onKeyUp}
                         maxLength={maxLength}
                         ref={fileRef}
+                        accept='image/*'
                     />
                 </div>
                 <div

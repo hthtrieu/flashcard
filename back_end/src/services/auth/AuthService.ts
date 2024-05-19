@@ -6,9 +6,30 @@ import UserRepoInterface from "@repositories/user/UserRepoInterface";
 import UserRepo from "@repositories/user/UseRepo";
 import { comparePassword } from "@helper/HashingPassword";
 import { genAccessToken, genRefreshToken, verifyToken } from "@helper/JwtHelper";
-import { SuccessResponse, FailureMsgResponse, InternalErrorResponse } from "@src/core/ApiResponse";
-import { UserProfile } from "@dto/auth/UserProfile";
-
+import {
+    SuccessResponse,
+    SuccessMsgResponse,
+    FailureResponse,
+    FailureMsgResponse,
+    InternalErrorResponse
+} from "@src/core/ApiResponse";
+import {
+    NotFoundError,
+    ApiError,
+    InternalError,
+    ErrorType,
+    BadRequestError,
+    AuthFailureError,
+    ForbiddenError,
+} from '@src/core/ApiError';
+import {
+    SignInRequestType,
+    SignInSuccessResponseType,
+    SignUpRequestType,
+    ForgotPasswordRequest,
+    ResetPasswordRequest,
+    ForgotPasswordResponse,
+} from "@src/dto/auth/index";
 dotenv.config();
 @Service()
 class AuthService implements AuthServiceInterface {
@@ -17,54 +38,68 @@ class AuthService implements AuthServiceInterface {
         this.userRepo = Container.get(UserRepo);
     }
 
-    public sign_in = async (req: Request, res: Response): Promise<any> => {
-        try {
-            const userData = await this.userRepo.getUserByUsername(req.body.username);
-            if (userData) {
-                if (comparePassword(req.body.password, userData.password)) {
-                    const access_token = genAccessToken({
-                        id: userData.id,
-                        username: userData.username,
-                        role: userData.role
-                    });
-                    const refresh_token = genRefreshToken({
-                        id: userData.id,
-                        username: userData.username,
-                        role: userData.role,
-                    });
-                    const result = await this.userRepo.storeToken(userData.id, refresh_token);
-                    return new SuccessResponse('Login Success', {
-                        access_token, refresh_token, exprires_access_token: "1d"
-                    }).send(res);
-                }
-            }
-            return new FailureMsgResponse('Invalid Credentials').send(res);
-        } catch (error: any) {
-            console.log('Error: ', error)
-            return new InternalErrorResponse('Internal Server Error').send(res);
-        }
-    };
-
-    public sign_up = async (req: Request, res: Response): Promise<any> => {
-        try {
-            const isExistedEmail = await this.userRepo.isExistedEmail(req.body.email)
-            if (isExistedEmail) {
-                return new FailureMsgResponse('Email Existed!').send(res);
-            }
-            else {
-                const newUser = await this.userRepo.createUser(req.body)
-                if (!newUser) {
-                    return new FailureMsgResponse('Create User Failed').send(res);
+    public sign_in = async (data: SignInRequestType): Promise<SignInSuccessResponseType | null | undefined> => {
+        const userData = await this.userRepo.getAllUserInfoBy("username", data.username);
+        if (userData) {
+            if (comparePassword(data.password, userData.password)) {
+                const access_token = genAccessToken({
+                    id: userData.id,
+                    username: userData.username,
+                    role: userData.role,
+                    email: userData.email,
+                });
+                const refresh_token = genRefreshToken({
+                    id: userData.id,
+                    username: userData.username,
+                    role: userData.role,
+                    email: userData.email,
+                });
+                const result = await this.userRepo.storeToken(userData.id, refresh_token);
+                if (result) {
+                    return {
+                        access_token,
+                        refresh_token,
+                        exprires_access_token: String(process.env.TOKEN_EXPIRE_TIME)
+                    }
                 }
                 else {
-                    const userProfile = await this.userRepo.me(newUser.id);
-                    return new SuccessResponse('User Created', userProfile).send(res);
+                    return null;
                 }
             }
-        } catch (error) {
-            console.log(error)
-            return new InternalErrorResponse('Internal Server Error').send(res);
+            else {
+                throw new AuthFailureError('Password is incorrect');
+            }
         }
+        throw new BadRequestError('Username not found');
+    };
+    public sign_up = async (data: SignUpRequestType): Promise<any> => {
+        const isExistedEmail = await this.userRepo.getUserBy("email", data.email);
+        if (isExistedEmail) {
+            throw new BadRequestError('Email Existed!');
+        }
+        const isExistedUsername = await this.userRepo.getUserBy("username", data.username);
+        if (isExistedUsername) {
+            throw new BadRequestError('Username Existed!');
+            // return new FailureMsgResponse('Username Existed!').send(res);
+        }
+        const newUser = await this.userRepo.createUser(data)
+        if (!newUser) {
+            throw new InternalError('Create User Failed');
+            // return new FailureMsgResponse('Create User Failed').send(res);
+        }
+        else {
+            const userProfile = await this.userRepo.me(newUser.id);
+            if (!userProfile) {
+                throw new InternalError('Get User Profile Failed');
+                // return new FailureMsgResponse('Get User Profile Failed').send(res);
+            }
+            return userProfile;
+            // return new SuccessResponse('User Created', userProfile).send(res);
+        }
+        // } catch (error) {
+        //     console.log(error)
+        //     return new InternalErrorResponse('Internal Server Error').send(res);
+        // }
     }
 
     public get_access_token_by_refresh_token = async (req: Request, res: Response): Promise<any> => {
@@ -75,7 +110,7 @@ class AuthService implements AuthServiceInterface {
             }
 
             // Check validity with an existing token
-            const isExistingToken = await this.userRepo.isExistedToken(String(refresh_token));
+            const isExistingToken = await this.userRepo.getUserBy("token", String(refresh_token));
 
             if (isExistingToken) {
                 const user = verifyToken(refresh_token);
@@ -107,11 +142,10 @@ class AuthService implements AuthServiceInterface {
     }
 
 
-    public me = async (data: any, res: Response): Promise<any> => {
+    public me = async (req: any, res: Response): Promise<any> => {
         try {
-            const id = data.user.id;
+            const id = req.user.id;
             const user = await this.userRepo.me(String(id))
-            const userProfile = new UserProfile(user);
             if (user) {
                 return new SuccessResponse('User Profile', user).send(res);
             }
@@ -124,7 +158,7 @@ class AuthService implements AuthServiceInterface {
         try {
             if (req?.user) {
                 const { displayName, email } = req?.user as { displayName: string, email: string };
-                const userData = await this.userRepo.getUserByUsername(displayName);
+                const userData = await this.userRepo.getAllUserInfoBy("username", displayName);
                 if (userData) {
                     const access_token = genAccessToken({
                         id: userData.id,
@@ -144,6 +178,31 @@ class AuthService implements AuthServiceInterface {
             }
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    logout = async (req: any, res: Response): Promise<any> => {
+        try {
+            const id = req.user.id;
+            const user = await this.userRepo.me(String(id))
+            if (user) {
+                const result = await this.userRepo.storeToken(user.id, '');
+                if (result) {
+                    req.logOut((err: any) => {
+                        if (err) {
+                            console.log("err", err)
+                        }
+                    });
+                    return new SuccessMsgResponse('Logout Success').send(res);
+                }
+                else {
+                    return new FailureMsgResponse('Logout Failed').send(res);
+                }
+            }
+            return new FailureMsgResponse('User not found').send(res);
+        } catch (error) {
+            console.log(error)
+            return new InternalErrorResponse('Internal Server Error').send(res);
         }
     }
 }

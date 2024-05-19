@@ -11,10 +11,14 @@ import {
   GetProfileApi,
   GetNewAccessTokenApi,
   SignupApi,
+  LoginWithOauthApi,
+  logoutApi,
 } from "@/api/AuthApi";
 import {
   loginAction,
   loginActionSuccess,
+  loginActionError,
+  loginSuccessWithOauthAction,
   getProfileAction,
   getProfileActionSuccess,
   getProfileActionError,
@@ -22,10 +26,14 @@ import {
   // getAccessTokenByRefreshTokenActionSuccess,
   registerAction,
   registerActionSuccess,
+  registerActionError,
+  logoutAction,
+  logoutSuccessAction,
+  logoutErrorsAction,
 } from "./slice";
 
 function* watchLogin() {
-  yield takeLatest(loginAction.type, function* ({ payload }: PayloadAction<LoginPayload>): Generator<any, void, any> {
+  yield takeLatest(loginAction.type, function* ({ payload }: PayloadAction<any>): Generator<any, void, any> {
     const { onSuccess, onError, data } = payload;
     try {
       const res = yield call(LoginApi, data);
@@ -36,15 +44,15 @@ function* watchLogin() {
               data: res?.data?.data,
             })
           );
-          onSuccess && onSuccess();
+          isFunction(payload.onSuccess) && payload.onSuccess(res?.data?.message);
         }
+
       }
-      if (res.status === ErrorCode.BAD_REQUEST) {
-        onError && onError();
-      }
-    } catch (error) {
-      onError && onError();
-    } finally {
+    } catch (error: any) {
+      isFunction(payload.onError) && payload?.onError(error?.response?.data?.message);
+      yield put(
+        loginActionError()
+      );
     }
   });
 }
@@ -63,14 +71,18 @@ function* watchGetProfile() {
           );
           isFunction(onSuccess) && payload.onSuccess(res?.data?.data);
         }
-        // yield put(
-        //   getProfileActionError()
-        // );
+        else {
+          yield put(
+            getProfileActionError()
+          );
+        }
 
       }
-      // yield put(
-      //   getProfileActionError()
-      // );
+      else {
+        yield put(
+          getProfileActionError()
+        );
+      }
     } catch (error) {
       onError && onError(error);
     }
@@ -78,7 +90,7 @@ function* watchGetProfile() {
 }
 
 function* watchRegister() {
-  yield takeLatest(registerAction.type, function* ({ payload }: any): Generator<any, void, any> {
+  yield takeLatest(registerAction.type, function* ({ payload }: PayloadAction<any>): Generator<any, void, any> {
     const { onSuccess, onError, data } = payload;
     try {
       const res = yield call(SignupApi, data);
@@ -86,20 +98,16 @@ function* watchRegister() {
         if (res?.data?.statusCode == ApiCode.SUCCESS) {
           yield put(
             registerActionSuccess({
-              // data: res?.data?.data,
             })
           );
           onSuccess && onSuccess();
         }
-        else if (res?.data?.statusCode == ApiCode.FAILURE) {
-          onError && onError(res?.data?.message);
-        }
       }
-      if (res.status === ErrorCode.BAD_REQUEST) {
-        onError && onError(res?.data?.message);
-      }
-    } catch (error) {
-      onError && onError();
+    } catch (error: any) {
+      isFunction(onError) && onError(error?.response?.data?.message);
+      yield put(
+        registerActionError()
+      );
     }
   });
 }
@@ -119,12 +127,77 @@ function* watchGetNewAccessToken() {
     }
   });
 }
-
+function* watchgetAccessTokenWithOauth() {
+  yield takeEvery(loginSuccessWithOauthAction.type, function* ({ payload }: any): Generator<any, void, any> {
+    const { onSuccess, onError } = payload;
+    try {
+      const res = yield call(LoginWithOauthApi);
+      if (res.status === ErrorCode.OK) {
+        if (res?.data?.statusCode == ApiCode.SUCCESS) {
+          yield put(
+            loginActionSuccess({
+              data: res?.data?.data,
+            })
+          );
+          isFunction(onSuccess) && onSuccess(res?.data?.message);
+        }
+        else {
+          isFunction(onError) && onError(res?.data?.message);
+          yield put(
+            loginActionError()
+          );
+        }
+      }
+      if (res.status === ErrorCode.BAD_REQUEST) {
+        isFunction(onError) && onError();
+        loginActionError()
+      }
+    } catch (error) {
+      isFunction(onError) && onError();
+    }
+  });
+}
+function* watchLogout() {
+  yield takeEvery(logoutAction.type, function* ({ payload }: PayloadAction<any>): Generator<any, void, any> {
+    const { onSuccess, onError } = payload;
+    try {
+      const res = yield call(logoutApi);
+      if (res.status === ErrorCode.OK) {
+        if (res?.data?.statusCode == ApiCode.SUCCESS) {
+          yield put(
+            logoutSuccessAction()
+          );
+          isFunction(onSuccess) && payload.onSuccess(res?.data?.data);
+        }
+        // else {
+        //   isFunction(onError) && payload.onError(res?.data?.message);
+        //   yield put(
+        //     logoutErrorsAction()
+        //   );
+        // }
+      }
+      // else {
+      //   isFunction(onError) && payload.onError();
+      //   yield put(
+      //     logoutErrorsAction()
+      //   );
+      // }
+    } catch (error: any) {
+      isFunction(payload.onError) && payload.onError(error?.response?.data?.message);
+      // ! not allow to logout
+      yield put(
+        logoutErrorsAction()
+      );
+    }
+  });
+}
 export default function* AuthSaga() {
   yield all([
     fork(watchLogin),
     fork(watchGetProfile),
     fork(watchGetNewAccessToken),
     fork(watchRegister),
+    fork(watchgetAccessTokenWithOauth),
+    fork(watchLogout),
   ]);
 }
