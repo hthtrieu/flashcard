@@ -8,6 +8,10 @@ import * as dotenv from 'dotenv';
 import { MainSeeder } from "./seeder/Seeder"
 import { SeederOptions } from "typeorm-extension"
 import { Questions } from "./entity/Questions"
+import { UserProgress } from "./entity/UserProgress"
+import { Tests } from "./entity/Tests"
+import { TestQuestion } from "./entity/TestQuestion"
+import { TestResult } from "./entity/TestResult"
 
 dotenv.config();
 const env = String(process.env.NODE_ENV);
@@ -19,12 +23,22 @@ let options: DataSourceOptions & SeederOptions = {
     username: String(process.env.DB_USERNAME),
     password: String(process.env.DB_PASSWORD),
     database: String(process.env.DB_DATABASE),
-    entities: [User, Sets, PasswordResetOtps, Cards, Questions],
-    migrations: [`${__dirname}/**/migrations/*.{ts,js}`],
+    entities: [User,
+        Sets,
+        PasswordResetOtps,
+        Cards,
+        Questions,
+        UserProgress,
+        Tests,
+        TestQuestion,
+        TestResult,
+    ],
+    // migrations: [`${__dirname}/**/migrations/*.{ts,js}`],
     synchronize: true,
     logging: false,
     subscribers: [],
     seeds: [MainSeeder],
+
 }
 if (env === 'production' || env === 'delopment') {
     options = {

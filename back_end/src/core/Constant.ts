@@ -18,4 +18,26 @@ export class Constants {
         skip: 0,
         query: ''
     }
+
+    static SET_STATUS = {
+        DRAFT: 'draft',
+        PUBLISHED: 'published',
+        ARCHIVED: 'archived',
+        PENDING: 'pending',
+        APPROVED: 'approved',
+        REJECTED: 'rejected',
+    }
+
+    static SET_LEVEL = {
+        EASY: 1,
+        MEDIUM: 2,
+        HARD: 3,
+    }
+
+
+    static CARD_STATUS = {
+        UNKNOWN: 'unknown',
+        KNOWN: 'known',
+        REVIEW: 'review',
+    }
 }
