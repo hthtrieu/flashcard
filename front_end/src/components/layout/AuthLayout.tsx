@@ -37,26 +37,34 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
     }, [])
 
     return (
-        <div className='bg-gray-50 dark:bg-background'>
-            <div className='sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-                <MaxWidthWrapper>
-                    <MainHeaderMobile />
-                    <MainHeader />
-                </MaxWidthWrapper>
+        <div className='bg-background-400'>
+            <div className='dark:bg-background min-h-screen flex flex-col w-full'>
+                <header className="flex h-fit w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+                    <MaxWidthWrapper>
+                        <MainHeaderMobile />
+                        <MainHeader className="p-0" />
+                    </MaxWidthWrapper>
+                </header>
                 <Separator />
-            </div>
-            <MaxWidthWrapper>
-                <div className='mt-2 md:mt-10 min-h-96'>
-                    {/* {children} */}
-                    {
-                        profile
-                        &&
-                        <Outlet />
-                    }
+                <div className="flex flex-1">
+                    <MaxWidthWrapper className='h-full m-auto'>
+                        <div className='mt-10 h-full'>
+                            {
+                                profile
+                                &&
+                                <Outlet />
+                            }
+                        </div>
+                        <div className='fixed bottom-10 right-10'><ModeToggle /></div>
+                    </MaxWidthWrapper>
                 </div>
-                <div className='fixed bottom-10 right-10'><ModeToggle /></div>
-            </MaxWidthWrapper>
-            <Footer />
+                <Separator />
+                <footer className="flex h-fit w-full">
+                    <MaxWidthWrapper>
+                        <Footer />
+                    </MaxWidthWrapper>
+                </footer>
+            </div>
         </div>
     );
 };
