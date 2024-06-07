@@ -106,7 +106,7 @@ const LearningCards = (props: any) => {
                                                     <FlipCard key={index} card={card} onFlip={onFlip} />
                                                     <div className='text-center mt-2'>{`${currentCard + 1}/${data?.cards?.length}`}</div>
                                                 </div>
-                                                <div className='absolute top-1/2 right-full translate-y-[-1/2]'>
+                                                <div className='absolute top-1/2 md:right-full translate-y-[-1/2]'>
 
                                                     <Button variant={"ghost"} onClick={(e) => {
                                                         e.preventDefault();
@@ -114,7 +114,7 @@ const LearningCards = (props: any) => {
 
                                                     }}><ChevronLeft /></Button>
                                                 </div>
-                                                <div className='absolute top-1/2 left-full translate-y-[-1/2]'>
+                                                <div className='absolute top-1/2 right-0 md:left-full translate-y-[-1/2]'>
                                                     <Button variant={"ghost"} onClick={(e) => {
                                                         e.preventDefault();
                                                         isFunction(showCard) && showCard(index + 1)
@@ -127,21 +127,6 @@ const LearningCards = (props: any) => {
                                             <SentencesExampleBox example={card?.example} />
                                         </div>
                                     </CardContent>
-                                    <CardFooter className="grid grid-cols-1 md:grid-cols-6 gap-1 mt-4">
-                                        {/* <div className="col-span-1 md:col-span-3 flex justify-end gap-6 items-center">
-                                            <Button variant={"ghost"} onClick={(e) => {
-                                                e.preventDefault();
-                                                isFunction(showCard) && showCard(index - 1)
-
-                                            }}><ChevronLeft /></Button>
-                                            <span>{`${currentCard + 1}/${data?.cards?.length}`}</span>
-                                            <Button variant={"ghost"} onClick={(e) => {
-                                                e.preventDefault();
-                                                isFunction(showCard) && showCard(index + 1)
-                                            }}><ChevronRight /></Button>
-                                        </div> */}
-                                        <div className="col-span-3"></div>
-                                    </CardFooter>
                                 </>}
                         </div>
                     )
