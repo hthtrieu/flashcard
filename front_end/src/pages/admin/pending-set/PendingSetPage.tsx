@@ -153,7 +153,6 @@ const PendingSetPage = () => {
                 <PopoverContent className="w-40">
                   {Object.keys(Constants.LEVEL).map((level: string) => {
                     const levelNumber = Number(level); // Ép kiểu về số
-                    console.log('level', levelNumber);
                     return (
                       <Button
                         type="button"
@@ -234,7 +233,7 @@ const PendingSetPage = () => {
                       card={card}
                       setId={data?.id}
                       readMode={true}
-                      // isEdit={false}
+                    // isEdit={false}
                     />
                   </Card>
                 );

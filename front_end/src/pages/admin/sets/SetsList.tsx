@@ -61,7 +61,7 @@ const SetsList = () => {
         page_index: pageNumber,
         filter: filter || Constants.SORT_BY[0].key,
         name: name || null,
-        onSuccess: () => {},
+        onSuccess: () => { },
         onError: (message: string) => {
           toast({
             title: 'Error',
@@ -86,6 +86,7 @@ const SetsList = () => {
       set_name: values.set_name,
       set_description: values.set_description,
       set_image: values.set_image.image,
+      level: values.level,
       card: values.cards.map((card: any) => ({
         term: card.term,
         define: card.define,
@@ -128,7 +129,7 @@ const SetsList = () => {
       setOpen(true);
       // setSelectedId(id)
       GetSetById(id);
-    } catch (error) {}
+    } catch (error) { }
   };
   const onDelete = (id: string) => {
     dispatch({
@@ -205,10 +206,14 @@ const SetsList = () => {
         TriggerComponent={null}
         children={
           <ScrollArea className="h-[600px]">
-            <SetForm defaultValues={defaultValues} onCreate={onCreate} />
+            <SetForm
+              defaultValues={defaultValues}
+              onCreate={onCreate}
+              showLevel={true}
+            />
           </ScrollArea>
         }
-        // title={"Create Set"}
+      // title={"Create Set"}
       />
       <CustomPagination
         total={pagination?.total || 0}

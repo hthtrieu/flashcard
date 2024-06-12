@@ -5,6 +5,7 @@ export type CreateNewSetData = {
   description?: string;
   image?: string;
   is_public: boolean;
+  level: number;
   created_by?: string;
   user?: User;
   cards?: {
@@ -24,18 +25,19 @@ export type CreateNewSetData = {
 export type UpdateSetRequest = {
   // todo: create jwt data type
   user:
-    | {
-        id: string;
-        role: string;
-        email: string;
-        username: string;
-      }
-    | undefined;
+  | {
+    id: string;
+    role: string;
+    email: string;
+    username: string;
+  }
+  | undefined;
   id: string;
   set_name: string;
   set_description?: string;
   is_delete_image?: 'true' | 'false' | undefined;
   files?: any;
+  level?: number | string;
   cards?: {
     term: string;
     define: string;
@@ -46,18 +48,19 @@ export type UpdateSetRequest = {
 
 export type createNewSetAndCardsRequest = {
   user?:
-    | {
-        id: string;
-        role: string;
-        email: string;
-        username: string;
-      }
-    | undefined;
+  | {
+    id: string;
+    role: string;
+    email: string;
+    username: string;
+  }
+  | undefined;
   set_name: string;
   set_description?: string;
   set_image?: any;
   is_public?: boolean;
   files?: any;
+  level?: number | string;
   cards?: {
     term: string;
     define: string;
