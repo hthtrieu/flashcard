@@ -19,10 +19,12 @@ import {
 } from '@/components/ui/popover';
 import { logoutAction } from '@/redux/auth/slice';
 import Constants from '@/lib/Constants';
+import { getUserJWTDecode } from '@/lib/utils';
 
 import { FormInput } from '../../custom_input/CustomInput';
 import MaxWidthWrapper from '../../MaxWidthWrapper';
 
+const userProfile = getUserJWTDecode();
 const MainHeader = (props: any) => {
   const { isAdmin, className } = props;
   const dispatch = useDispatch();
@@ -48,7 +50,7 @@ const MainHeader = (props: any) => {
   const onTextChanged = (value: any) => {
     setShowSubmit(value.length > 0);
   };
-
+  useEffect(() => {}, [isAdmin]);
   return (
     <div className="hidden h-20 md:block md:w-full">
       <div className="flex h-full w-full items-center justify-between">
@@ -58,7 +60,7 @@ const MainHeader = (props: any) => {
             <Link to={routerPaths.PUBLIC_SETS}>Sets</Link>
           </Button>
           {loggedIn ? (
-            profile?.role === Constants.ROLE.ADMIN ? (
+            userProfile?.role === Constants.ROLE.ADMIN ? (
               <>
                 <Button variant={'link'}>
                   <Link to={routerPaths.ADMIN}>Admin site</Link>

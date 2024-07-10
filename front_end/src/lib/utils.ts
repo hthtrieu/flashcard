@@ -1,5 +1,5 @@
 import { clsx, type ClassValue } from 'clsx';
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { twMerge } from 'tailwind-merge';
 
 import Constants from './Constants';
@@ -94,11 +94,10 @@ export const setColorLevel = (level: string) => {
   }
 };
 
-export const getUserJWTDecode = () => {
-  const token =
-    (localStorage.getItem('access_token') &&
-      localStorage.getItem('access_token')) ||
-    '';
+export const getUserJWTDecode = (): JwtPayload | any => {
+  const token = localStorage.getItem('access_token')
+    ? JSON.parse(localStorage.getItem('access_token') || '')
+    : '';
   if (!token) {
     return null;
   }
