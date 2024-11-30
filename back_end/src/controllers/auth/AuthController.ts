@@ -1,27 +1,31 @@
 import { Request, Response } from 'express';
-import Container from 'typedi';
+import Container, { Inject } from 'typedi';
+
 import {
   FailureMsgResponse,
   FailureResponse,
   InternalErrorResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
+} from '../../core/ApiResponse';
 import {
   ForgotPasswordRequest,
   ForgotPasswordResponse,
   ResetPasswordRequest,
   SignInRequestType,
   SignUpRequestType,
-} from '@src/dto/auth/index';
-import AuthService from '@services/auth/AuthService';
-import AuthServiceInterface from '@services/auth/AuthServiceInterface';
+} from '../../dto/auth/index';
+import AuthService from '../../services/auth/AuthService';
+import AuthServiceInterface from '../../services/auth/AuthServiceInterface';
 
 class AuthController {
+  // private authService: AuthServiceInterface;
+  // constructor() {
+  //   this.authService = Container.get(AuthService);
+  // }
+  @Inject(() => AuthService)
   private authService: AuthServiceInterface;
-  constructor() {
-    this.authService = Container.get(AuthService);
-  }
+
   sign_in = async (req: Request, res: Response): Promise<any> => {
     const data: SignInRequestType = req.body;
     const response = await this.authService.sign_in(data);

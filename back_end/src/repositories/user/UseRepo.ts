@@ -1,8 +1,8 @@
-import { User } from '@entity/User';
 import { Service } from 'typedi';
-import { comparePassword, hasingPassword } from '@helper/HashingPassword';
 
 import { AppDataSource } from '../../data-source';
+import { User } from '../../entity/User';
+import { comparePassword, hasingPassword } from '../../helper/HashingPassword';
 import UserRepoInterface from './UserRepoInterface';
 
 @Service()
@@ -13,7 +13,7 @@ export class UserRepo implements UserRepoInterface {
     const user = new User();
     user.email = data.email;
     user.username = data.username;
-    const { password , salt} = hasingPassword(String(data.password));
+    const { password, salt } = hasingPassword(String(data.password));
     user.password = password;
     return this.userDataSource.save(user);
   };

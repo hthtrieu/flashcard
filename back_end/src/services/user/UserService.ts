@@ -1,25 +1,25 @@
 import { Request, Response } from 'express';
 import { Container, Service } from 'typedi';
-import { AuthFailureError } from '@src/core/ApiError';
+import { AuthFailureError } from '../../core/ApiError';
 import {
   FailureMsgResponse,
   FailureResponse,
   InternalErrorResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
-import { EditUserProfileRequest } from '@src/dto/user';
-import { comparePassword, hasingPassword } from '@src/helper/HashingPassword';
-import { IUserSetsRepo } from '@src/repositories/user-sets/IUserSetsRepo';
-import { UserSetsRepo } from '@src/repositories/user-sets/UserSetsRepo';
-import { FirebaseUpload } from '@services/upload/FirebaseUpload';
-import { IUploadService } from '@services/upload/IUploadService';
-import UserRepo from '@repositories/user/UseRepo';
-import UserRepoInterface from '@repositories/user/UserRepoInterface';
+} from '../../core/ApiResponse';
+import { EditUserProfileRequest } from '../../dto/user';
+import { comparePassword, hasingPassword } from '../../helper/HashingPassword';
+import { IUserSetsRepo } from '../../repositories/user-sets/IUserSetsRepo';
+import { UserSetsRepo } from '../../repositories/user-sets/UserSetsRepo';
+import { FirebaseUpload } from '../../services/upload/FirebaseUpload';
+import { IUploadService } from '../../services/upload/IUploadService';
+import UserRepo from '../../repositories/user/UseRepo';
+import UserRepoInterface from '../../repositories/user/UserRepoInterface';
 
 import { UserServiceInterface } from './UserServiceInterface';
 
-@Service()
+Service()
 export class UserService implements UserServiceInterface {
   private userRepo: UserRepoInterface;
   private userSetsRepo: IUserSetsRepo;

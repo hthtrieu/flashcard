@@ -1,23 +1,23 @@
 import { Request, Response } from 'express';
 import Container, { Service } from 'typedi';
+
 import {
   AuthFailureError,
   ForbiddenError,
   NotFoundError,
-} from '@src/core/ApiError';
-import { FailureMsgResponse, SuccessMsgResponse } from '@src/core/ApiResponse';
-import { Constants } from '@src/core/Constant';
-import { CreateCardDataRequest, UpdateCardDataRequest } from '@src/dto/cards';
-import { Cards } from '@src/entity/Cards';
-import UserRepo from '@src/repositories/user/UseRepo';
-import UserRepoInterface from '@src/repositories/user/UserRepoInterface';
-import { IVocabularyCardRepo } from '@src/repositories/vocabulary-card/IVocabularyCardRepo';
-import { VocabularyCardRepo } from '@src/repositories/vocabulary-card/VocabularyCardRepo';
-import { IVocabularySetRepo } from '@src/repositories/vocabulary-set/IVocabularySetRepo';
-import { VocabularySetRepo } from '@src/repositories/vocabulary-set/VocabularySetRepo';
-import { FirebaseUpload } from '@services/upload/FirebaseUpload';
-import { IUploadService } from '@services/upload/IUploadService';
-
+} from '../../core/ApiError';
+import { FailureMsgResponse, SuccessMsgResponse } from '../../core/ApiResponse';
+import { Constants } from '../../core/Constant';
+import { CreateCardDataRequest, UpdateCardDataRequest } from '../../dto/cards';
+import { Cards } from '../../entity/Cards';
+import UserRepo from '../../repositories/user/UseRepo';
+import UserRepoInterface from '../../repositories/user/UserRepoInterface';
+import { IVocabularyCardRepo } from '../../repositories/vocabulary-card/IVocabularyCardRepo';
+import { VocabularyCardRepo } from '../../repositories/vocabulary-card/VocabularyCardRepo';
+import { IVocabularySetRepo } from '../../repositories/vocabulary-set/IVocabularySetRepo';
+import { VocabularySetRepo } from '../../repositories/vocabulary-set/VocabularySetRepo';
+import { FirebaseUpload } from '../../services/upload/FirebaseUpload';
+import { IUploadService } from '../../services/upload/IUploadService';
 import { ICardService } from './ICardService';
 
 @Service()

@@ -1,14 +1,12 @@
-import { Container } from 'typedi';
-import { FailureMsgResponse, SuccessMsgResponse } from '@src/core/ApiResponse';
-import { UserService } from '@src/services/user/UserService';
-import { UserServiceInterface } from '@src/services/user/UserServiceInterface';
+import { Container, Inject } from 'typedi';
+import { FailureMsgResponse, SuccessMsgResponse } from '../../core/ApiResponse';
+import { UserService } from '../../services/user/UserService';
+import { UserServiceInterface } from '../../services/user/UserServiceInterface';
 
 export class UserProfileController {
-  private userService: UserServiceInterface;
 
-  constructor() {
-    this.userService = Container.get(UserService);
-  }
+ @Inject(() => UserService)
+  private userService: UserServiceInterface;
 
   editProfile = async (req: any, res: any) => {
     const data = {

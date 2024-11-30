@@ -1,14 +1,15 @@
 import { Request, Response, Router } from 'express';
-import { AsyncHandler } from '@src/helper/AsyncHandler';
-import isValidRequest from '@middleware/ValidRequest';
-import isValidKey from '@middleware/VerifyApiKey';
-import verifyToken from '@middleware/VerifyToken';
-import AuthController from '@controllers/auth/AuthController';
-import { PasswordResetController } from '@controllers/password-reset/PasswordResetController';
-import ForgotPasswordRequest from '@dto/auth/ForgotPasswordRequest';
-import ResetPasswordRequest from '@dto/auth/ResetPasswordRequest';
-import SignInRequest from '@dto/auth/SignInRequest';
-import SignUpRequest from '@dto/auth/SignUpRequest';
+
+import AuthController from '../../controllers/auth/AuthController';
+import { PasswordResetController } from '../../controllers/password-reset/PasswordResetController';
+import ForgotPasswordRequest from '../../dto/auth/ForgotPasswordRequest';
+import ResetPasswordRequest from '../../dto/auth/ResetPasswordRequest';
+import SignInRequest from '../../dto/auth/SignInRequest';
+import SignUpRequest from '../../dto/auth/SignUpRequest';
+import { AsyncHandler } from '../../helper/AsyncHandler';
+import isValidRequest from '../../middleware/ValidRequest';
+import isValidKey from '../../middleware/VerifyApiKey';
+import verifyToken from '../../middleware/VerifyToken';
 
 const router = Router();
 const authController = new AuthController();

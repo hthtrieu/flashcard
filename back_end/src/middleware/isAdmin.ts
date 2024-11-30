@@ -3,12 +3,11 @@ import { NextFunction, Request, Response } from 'express';
 // Removed 'InternalErrorResponse' import
 import jwt, { JwtPayload } from 'jsonwebtoken'; // Added 'JwtPayload' import
 
-import { Constants } from '@src/core/Constant';
-
 import {
   AccessTokenErrorResponse,
   AuthFailureResponse,
 } from '../core/ApiResponse';
+import { Constants } from '../core/Constant';
 
 dotenv.config();
 export const isAdmin = (

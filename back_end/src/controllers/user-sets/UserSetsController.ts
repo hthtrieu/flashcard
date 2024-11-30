@@ -1,17 +1,19 @@
 import { Request, Response } from 'express';
-import { Container } from 'typedi';
+import { Container,Inject } from 'typedi';
 import {
   FailureMsgResponse,
   FailureResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
-import { UpdateSetRequest } from '@src/dto/set';
-import { IUserSetsService } from '@src/services/user-sets/IUserSetsService';
-import { UserSetsService } from '@src/services/user-sets/UserSetsService';
+} from '../../core/ApiResponse';
+import { UpdateSetRequest } from '../../dto/set';
+import { IUserSetsService } from '../../services/user-sets/IUserSetsService';
+import { UserSetsService } from '../../services/user-sets/UserSetsService';
 
 export class UserSetsController {
-  private userSetsService: IUserSetsService = Container.get(UserSetsService);
+  @Inject(() => UserSetsService)
+  private userSetsService: IUserSetsService;
+
   getUserSetsList = async (req: any, res: any) => {
     const userId = req?.user?.id;
     const response = await this.userSetsService.getUserSetsList(userId);

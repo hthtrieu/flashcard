@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { Container } from 'typedi';
+
 import {
   FailureMsgResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
-import { TestKitService } from '@src/services/test-kit/TestKitService';
+} from '../../core/ApiResponse';
+import { TestKitService } from '../../services/test-kit/TestKitService';
 
 export class TestKitController {
   private testKitService: TestKitService;

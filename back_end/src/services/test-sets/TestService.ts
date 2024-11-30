@@ -1,20 +1,20 @@
-import { Cards } from '@entity/Cards';
-import { TestQuestion } from '@entity/TestQuestion';
-import { Tests } from '@entity/Tests';
 import Container, { Service } from 'typedi';
+
 import {
   AuthFailureError,
   BadRequestError,
   NotFoundError,
-} from '@src/core/ApiError';
-import { Constants } from '@src/core/Constant';
-import { Sets } from '@src/entity/Sets';
-import { TestKits } from '@src/entity/TestKit';
-import { TestResultDetails } from '@src/entity/TestResultDetails';
-import { User } from '@src/entity/User';
-import { UserProgress } from '@src/entity/UserProgress';
-
+} from '../../core/ApiError';
+import { Constants } from '../../core/Constant';
 import { AppDataSource } from '../../data-source';
+import { Cards } from '../../entity/Cards';
+import { Sets } from '../../entity/Sets';
+import { TestKits } from '../../entity/TestKit';
+import { TestQuestion } from '../../entity/TestQuestion';
+import { TestResultDetails } from '../../entity/TestResultDetails';
+import { Tests } from '../../entity/Tests';
+import { User } from '../../entity/User';
+import { UserProgress } from '../../entity/UserProgress';
 import { UserProgressService } from '../user-progress/UserProgressService';
 
 function getRandomElements<T>(
@@ -46,7 +46,7 @@ function getRandomElements<T>(
   return result;
 }
 
-@Service()
+Service()
 export class TestService {
   private userRepo;
   private setRepo;

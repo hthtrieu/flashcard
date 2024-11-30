@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { Request, Response } from 'express';
 import { Container, Inject, Service } from 'typedi';
+
 import {
   ApiError,
   AuthFailureError,
@@ -9,14 +10,14 @@ import {
   ForbiddenError,
   InternalError,
   NotFoundError,
-} from '@src/core/ApiError';
+} from '../../core/ApiError';
 import {
   FailureMsgResponse,
   FailureResponse,
   InternalErrorResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
+} from '../../core/ApiResponse';
 import {
   ForgotPasswordRequest,
   ForgotPasswordResponse,
@@ -24,20 +25,20 @@ import {
   SignInRequestType,
   SignInSuccessResponseType,
   SignUpRequestType,
-} from '@src/dto/auth/index';
-import { comparePassword } from '@helper/HashingPassword';
+} from '../../dto/auth/index';
+import { comparePassword } from '../../helper/HashingPassword';
 import {
   genAccessToken,
   genRefreshToken,
   verifyToken,
-} from '@helper/JwtHelper';
-import UserRepo from '@repositories/user/UseRepo';
-import UserRepoInterface from '@repositories/user/UserRepoInterface';
-
+} from '../../helper/JwtHelper';
+import UserRepo from '../../repositories/user/UseRepo';
+import UserRepoInterface from '../../repositories/user/UserRepoInterface';
 import AuthServiceInterface from './AuthServiceInterface';
 
 dotenv.config();
-@Service()
+
+Service()
 class AuthService implements AuthServiceInterface {
   private userRepo: UserRepoInterface;
   constructor() {
@@ -52,12 +53,12 @@ class AuthService implements AuthServiceInterface {
       data.username,
     );
     if (userData) {
-      if (comparePassword(
-        {
-          inputPassword:data.password, 
-          password:userData.password
-        }
-        )) {
+      if (
+        comparePassword({
+          inputPassword: data.password,
+          password: userData.password,
+        })
+      ) {
         const access_token = genAccessToken({
           id: userData.id,
           username: userData.username,

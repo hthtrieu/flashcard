@@ -7,40 +7,40 @@ import {
   ForbiddenError,
   InternalError,
   NotFoundError,
-} from '@src/core/ApiError';
+} from '../../core/ApiError';
 import {
   FailureMsgResponse,
   FailureResponse,
   InternalErrorResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
-import { Constants } from '@src/core/Constant';
-import { CreateNewSetData, UpdateSetRequest } from '@src/dto/set';
+} from '../../core/ApiResponse';
+import { Constants } from '../../core/Constant';
+import { CreateNewSetData, UpdateSetRequest } from '../../dto/set';
 import {
   SetsListResponse,
   SetsServiceResponse,
-} from '@src/dto/set/SetsListResponse';
+} from '../../dto/set/SetsListResponse';
 import {
   CopyCardToSetRequest,
   QuickAddCardToSetRequest,
   RequestToApproveSet,
-} from '@src/dto/uset-sets';
-import { Sets } from '@src/entity/Sets';
-import { IUserSetsRepo } from '@src/repositories/user-sets/IUserSetsRepo';
-import { UserSetsRepo } from '@src/repositories/user-sets/UserSetsRepo';
-import { IVocabularyCardRepo } from '@src/repositories/vocabulary-card/IVocabularyCardRepo';
-import { VocabularyCardRepo } from '@src/repositories/vocabulary-card/VocabularyCardRepo';
-import { FirebaseUpload } from '@services/upload/FirebaseUpload';
-import { IUploadService } from '@services/upload/IUploadService';
-import UserRepo from '@repositories/user/UseRepo';
-import UserRepoInterface from '@repositories/user/UserRepoInterface';
-import { IVocabularySetRepo } from '@repositories/vocabulary-set/IVocabularySetRepo';
-import { VocabularySetRepo } from '@repositories/vocabulary-set/VocabularySetRepo';
+} from '../../dto/uset-sets';
+import { Sets } from '../../entity/Sets';
+import { IUserSetsRepo } from '../../repositories/user-sets/IUserSetsRepo';
+import { UserSetsRepo } from '../../repositories/user-sets/UserSetsRepo';
+import { IVocabularyCardRepo } from '../../repositories/vocabulary-card/IVocabularyCardRepo';
+import { VocabularyCardRepo } from '../../repositories/vocabulary-card/VocabularyCardRepo';
+import { FirebaseUpload } from '../../services/upload/FirebaseUpload';
+import { IUploadService } from '../../services/upload/IUploadService';
+import UserRepo from '../../repositories/user/UseRepo';
+import UserRepoInterface from '../../repositories/user/UserRepoInterface';
+import { IVocabularySetRepo } from '../../repositories/vocabulary-set/IVocabularySetRepo';
+import { VocabularySetRepo } from '../../repositories/vocabulary-set/VocabularySetRepo';
 
 import { IUserSetsService } from './IUserSetsService';
 
-@Service()
+Service()
 export class UserSetsService implements IUserSetsService {
   private userSetsRepo: IUserSetsRepo;
   private userRepo: UserRepoInterface;

@@ -1,20 +1,18 @@
 import { Request, Response } from 'express';
-import { Container } from 'typedi';
+import { Container, Inject } from 'typedi';
 import {
   FailureMsgResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
-import { Constants } from '@src/core/Constant';
-import { UserProgressService } from '@src/services/user-progress/UserProgressService';
-
-import getUser from '../../helper/GetUserRequest';
+} from '../../core/ApiResponse';
+import { Constants } from '../../core/Constant';
+import { UserProgressService } from '../../services/user-progress/UserProgressService';
 
 export class UserProgressController {
+ 
+  @Inject(() => UserProgressService)
   private service: UserProgressService;
-  constructor() {
-    this.service = Container.get(UserProgressService);
-  }
+
   updateUserProgress = async (req: any, res: Response): Promise<any> => {
     const data = {
       userId: req.user?.id,

@@ -1,28 +1,28 @@
 import dotenv from 'dotenv';
 import { Request, Response } from 'express';
 import { Container, Inject, Service } from 'typedi';
-import { AuthFailureError, BadRequestError } from '@src/core/ApiError';
+
+import { AuthFailureError, BadRequestError } from '../../core/ApiError';
 import {
   FailureMsgResponse,
   FailureResponse,
   InternalErrorResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
-import { Constants } from '@src/core/Constant';
-import { ForgotPasswordResponse, ResetPasswordRequest } from '@src/dto/auth';
-import { isValidEmail } from '@helper/CheckValidEmail';
-import { hasingPassword } from '@helper/HashingPassword';
-import EmailService from '@services/mail/MailService';
-import { IPasswordResetOtpRepo } from '@repositories/password-reset-otp/IPasswordResetOtpRepo';
-import { PasswordResetOtpRepo } from '@repositories/password-reset-otp/PasswordResetOtpRepo';
-import UserRepo from '@repositories/user/UseRepo';
-import UserRepoInterface from '@repositories/user/UserRepoInterface';
-
+} from '../../core/ApiResponse';
+import { Constants } from '../../core/Constant';
+import { ForgotPasswordResponse, ResetPasswordRequest } from '../../dto/auth';
+import { isValidEmail } from '../../helper/CheckValidEmail';
+import { hasingPassword } from '../../helper/HashingPassword';
+import { IPasswordResetOtpRepo } from '../../repositories/password-reset-otp/IPasswordResetOtpRepo';
+import { PasswordResetOtpRepo } from '../../repositories/password-reset-otp/PasswordResetOtpRepo';
+import UserRepo from '../../repositories/user/UseRepo';
+import UserRepoInterface from '../../repositories/user/UserRepoInterface';
+import EmailService from '../../services/mail/MailService';
 import { IPasswordResetService } from './IPasswordResetService';
 
 dotenv.config();
-@Service()
+Service()
 export class PasswordResetService implements IPasswordResetService {
   private userRepo: UserRepoInterface;
   private emailService: any;

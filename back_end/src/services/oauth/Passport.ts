@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import UserRepo from '@repositories/user/UseRepo';
-import UserRepoInterface from '@repositories/user/UserRepoInterface';
+
+import UserRepo from '../../repositories/user/UseRepo';
+import UserRepoInterface from '../../repositories/user/UserRepoInterface';
 
 dotenv.config();
 

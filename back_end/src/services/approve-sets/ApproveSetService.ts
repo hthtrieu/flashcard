@@ -1,21 +1,21 @@
 import { Container, Service } from 'typedi';
+
+import { AppDataSource } from '../..//data-source';
+import { Sets } from '../..//entity/Sets';
+import UserRepo from '../..//repositories/user/UseRepo';
+import UserRepoInterface from '../..//repositories/user/UserRepoInterface';
+import { IVocabularySetRepo } from '../..//repositories/vocabulary-set/IVocabularySetRepo';
+import { VocabularySetRepo } from '../..//repositories/vocabulary-set/VocabularySetRepo';
 import {
   AuthFailureError,
   BadRequestError,
   ForbiddenError,
   NoDataError,
   NotFoundError,
-} from '@src/core/ApiError';
-import { Constants } from '@src/core/Constant';
-import { AppDataSource } from '@src/data-source';
-import { ApproveSetRequest } from '@src/dto/approve-sets';
-import { Cards } from '@src/entity/Cards';
-import { Sets } from '@src/entity/Sets';
-import UserRepo from '@src/repositories/user/UseRepo';
-import UserRepoInterface from '@src/repositories/user/UserRepoInterface';
-import { IVocabularySetRepo } from '@src/repositories/vocabulary-set/IVocabularySetRepo';
-import { VocabularySetRepo } from '@src/repositories/vocabulary-set/VocabularySetRepo';
-
+} from '../../core/ApiError';
+import { Constants } from '../../core/Constant';
+import { ApproveSetRequest } from '../../dto/approve-sets';
+import { Cards } from '../../entity/Cards';
 import { isAdmin } from '../../middleware/isAdmin';
 import { IApproveSetService } from './IApproveSetService';
 

@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { AsyncHandler } from '@src/helper/AsyncHandler';
-import { isAdmin } from '@middleware/isAdmin';
-import { UploadFile } from '@middleware/UploadFile';
-import isValidKey from '@middleware/VerifyApiKey';
-import verifyToken from '@middleware/VerifyToken';
-import CardController from '@controllers/card/CardController';
+
+import CardController from '../../controllers/card/CardController';
+import { AsyncHandler } from '../../helper/AsyncHandler';
+import { isAdmin } from '../../middleware/isAdmin';
+import { UploadFile } from '../../middleware/UploadFile';
+import isValidKey from '../../middleware/VerifyApiKey';
+import verifyToken from '../../middleware/VerifyToken';
 
 const router = Router();
 const cardController = new CardController();

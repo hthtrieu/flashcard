@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { ApproveSetController } from '@src/controllers/approve-sets/ApproveSetController';
-import { AsyncHandler } from '@src/helper/AsyncHandler';
-import { isAdmin } from '@src/middleware/isAdmin';
-import isValidRequest from '@middleware/ValidRequest';
-import isValidKey from '@middleware/VerifyApiKey';
-import verifyToken from '@middleware/VerifyToken';
+
+import { ApproveSetController } from '../../controllers/approve-sets/ApproveSetController';
+import { AsyncHandler } from '../../helper/AsyncHandler';
+import { isAdmin } from '../../middleware/isAdmin';
+import isValidRequest from '../../middleware/ValidRequest';
+import isValidKey from '../../middleware/VerifyApiKey';
+import verifyToken from '../../middleware/VerifyToken';
 
 const controller = new ApproveSetController();
 const router = Router();

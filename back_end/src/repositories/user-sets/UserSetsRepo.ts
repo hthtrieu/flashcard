@@ -1,13 +1,13 @@
-import { Sets } from '@entity/Sets';
-import { User } from '@entity/User';
 import { Service } from 'typedi';
-import { Cards } from '@src/entity/Cards';
-import { UserProgress } from '@src/entity/UserProgress';
 
 import { AppDataSource } from '../../data-source';
+import { Cards } from '../../entity/Cards';
+import { Sets } from '../../entity/Sets';
+import { User } from '../../entity/User';
+import { UserProgress } from '../../entity/UserProgress';
 import { IUserSetsRepo } from './IUserSetsRepo';
 
-@Service()
+Service()
 export class UserSetsRepo implements IUserSetsRepo {
   private userDataSource = AppDataSource.getRepository(User);
   private setDataSource = AppDataSource.getRepository(Sets);

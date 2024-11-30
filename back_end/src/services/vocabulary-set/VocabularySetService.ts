@@ -9,27 +9,27 @@ import {
   InternalError,
   NoDataError,
   NotFoundError,
-} from '@src/core/ApiError';
-import { FailureMsgResponse, SuccessMsgResponse } from '@src/core/ApiResponse';
-import { Constants } from '@src/core/Constant';
-import { createNewSetAndCardsRequest, UpdateSetRequest } from '@src/dto/set';
-import { GetAllPublicSetRequest } from '@src/dto/set/GetAllPublicSetRequest';
+} from '../../core/ApiError';
+import { FailureMsgResponse, SuccessMsgResponse } from '../../core/ApiResponse';
+import { Constants } from '../../core/Constant';
+import { createNewSetAndCardsRequest, UpdateSetRequest } from '../../dto/set';
+import { GetAllPublicSetRequest } from '../../dto/set/GetAllPublicSetRequest';
 import {
   SetsListResponse,
   SetsServiceResponse,
-} from '@src/dto/set/SetsListResponse';
-import { Sets } from '@src/entity/Sets';
-import { TestKits } from '@src/entity/TestKit';
-import { FirebaseUpload } from '@services/upload/FirebaseUpload';
-import { IUploadService } from '@services/upload/IUploadService';
-import { IVocabularyCardRepo } from '@repositories/vocabulary-card/IVocabularyCardRepo';
-import { VocabularyCardRepo } from '@repositories/vocabulary-card/VocabularyCardRepo';
-import { IVocabularySetRepo } from '@repositories/vocabulary-set/IVocabularySetRepo';
-import { VocabularySetRepo } from '@repositories/vocabulary-set/VocabularySetRepo';
+} from '../../dto/set/SetsListResponse';
+import { Sets } from '../../entity/Sets';
+import { TestKits } from '../../entity/TestKit';
+import { FirebaseUpload } from '../../services/upload/FirebaseUpload';
+import { IUploadService } from '../../services/upload/IUploadService';
+import { IVocabularyCardRepo } from '../../repositories/vocabulary-card/IVocabularyCardRepo';
+import { VocabularyCardRepo } from '../../repositories/vocabulary-card/VocabularyCardRepo';
+import { IVocabularySetRepo } from '../../repositories/vocabulary-set/IVocabularySetRepo';
+import { VocabularySetRepo } from '../../repositories/vocabulary-set/VocabularySetRepo';
 
 import { IVocabularySetService } from './IVocabularySetService';
 
-@Service()
+Service()
 class VocabularySetService implements IVocabularySetService {
   private setRepo: IVocabularySetRepo;
   private cardRepo: IVocabularyCardRepo;

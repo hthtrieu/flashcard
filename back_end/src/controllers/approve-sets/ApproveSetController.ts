@@ -1,16 +1,15 @@
 import { Request, Response } from 'express';
 import { Container } from 'typedi';
-import { AuthFailureError } from '@src/core/ApiError';
+
 import {
   FailureMsgResponse,
   FailureResponse,
   InternalErrorResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
-import { username } from '@src/dto/auth/SignInRequest';
-import { ApproveSetService } from '@src/services/approve-sets/ApproveSetService';
-import { IApproveSetService } from '@services/approve-sets/IApproveSetService';
+} from '../../core/ApiResponse';
+import { ApproveSetService } from '../../services/approve-sets/ApproveSetService';
+import { IApproveSetService } from '../../services/approve-sets/IApproveSetService';
 
 export class ApproveSetController {
   private service: IApproveSetService = Container.get(ApproveSetService);

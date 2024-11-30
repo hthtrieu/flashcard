@@ -1,12 +1,12 @@
 import { Service } from 'typedi';
 import { ILike } from 'typeorm';
-import { Constants } from '@src/core/Constant';
-import { AppDataSource } from '@src/data-source';
-import { createNewCardData, CreateNewSetData } from '@src/dto/set';
-import { Cards } from '@src/entity/Cards';
-import { Sets } from '@src/entity/Sets';
-import { User } from '@src/entity/User';
 
+import { Constants } from '../../core/Constant';
+import { AppDataSource } from '../../data-source';
+import { createNewCardData, CreateNewSetData } from '../../dto/set';
+import { Cards } from '../../entity/Cards';
+import { Sets } from '../../entity/Sets';
+import { User } from '../../entity/User';
 import { IVocabularySetRepo } from './IVocabularySetRepo';
 
 @Service()

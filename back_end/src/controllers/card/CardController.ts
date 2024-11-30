@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { Container } from 'typedi';
-import { FailureMsgResponse, SuccessMsgResponse } from '@src/core/ApiResponse';
-import { CardService } from '@src/services/card/CardService';
-import { ICardService } from '@src/services/card/ICardService';
+
+import { FailureMsgResponse, SuccessMsgResponse } from '../../core/ApiResponse';
+import { CardService } from '../../services/card/CardService';
+import { ICardService } from '../../services/card/ICardService';
 
 class CardController {
   private service: ICardService;

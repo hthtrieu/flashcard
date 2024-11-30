@@ -1,9 +1,9 @@
 import { Service } from 'typedi';
-import { AppDataSource } from '@src/data-source';
-import { NewCardData } from '@src/dto/cards';
-import { Cards } from '@src/entity/Cards';
-import { Sets } from '@src/entity/Sets';
 
+import { AppDataSource } from '../../data-source';
+import { NewCardData } from '../../dto/cards';
+import { Cards } from '../../entity/Cards';
+import { Sets } from '../../entity/Sets';
 import { User } from '../../entity/User';
 import { IVocabularyCardRepo } from './IVocabularyCardRepo';
 

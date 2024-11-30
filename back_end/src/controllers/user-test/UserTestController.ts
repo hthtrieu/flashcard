@@ -1,19 +1,16 @@
 import { Request, Response } from 'express';
-import { Container } from 'typedi';
+import { Container, Inject } from 'typedi';
 import {
   FailureMsgResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
-import { UserTestService } from '@src/services/user-test/UserTestService';
-
-import getUser from '../../helper/GetUserRequest';
+} from '../../core/ApiResponse';
+import { UserTestService } from '../../services/user-test/UserTestService';
 
 export class UserTestController {
+  @Inject(() => UserTestService)
   private service: UserTestService;
-  constructor() {
-    this.service = Container.get(UserTestService);
-  }
+
 
   saveTestResult = async (req: any, res: Response): Promise<any> => {
     const data = {

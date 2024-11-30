@@ -1,18 +1,18 @@
 import { Request, Response } from 'express';
-import Container from 'typedi';
+import Container, { Inject } from 'typedi';
+
 import {
   FailureMsgResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
-import { IPasswordResetService } from '@src/services/password-reset/IPasswordResetService';
-import { PasswordResetService } from '@services/password-reset/PasswordResetService';
+} from '../../core/ApiResponse';
+import { IPasswordResetService } from '../../services/password-reset/IPasswordResetService';
+import { PasswordResetService } from '../../services/password-reset/PasswordResetService';
 
 export class PasswordResetController {
+  @Inject(() => PasswordResetService)
   private passwordResetService: IPasswordResetService;
-  constructor() {
-    this.passwordResetService = Container.get(PasswordResetService);
-  }
+
   forgot_password = async (req: Request, res: Response) => {
     const email = req.body.email;
     const response = await this.passwordResetService.forgot_password(email);

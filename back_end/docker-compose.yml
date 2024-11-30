@@ -14,7 +14,19 @@ services:
       - .docker/data/db:/var/lib/postgresql/data
     networks:
       - db-network
-
+  minio:
+    image: bitnami/minio:latest
+    # container_name: minio_${APP_NAME}
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    networks:
+      - db-network
+    environment:
+      MINIO_ROOT_USER: user
+      MINIO_ROOT_PASSWORD: password
+    volumes:
+      - .docker/minio-data:/data # Volume for Minio data
 networks:
   db-network:
     driver: bridge

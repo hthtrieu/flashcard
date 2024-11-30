@@ -9,13 +9,13 @@ dotenv.config();
 const router = Router();
 const authController = new AuthController();
 
-router.get('/login/success', (req: Request, res: Response) => {
-  if (req.user) {
-    return authController.sign_in_success_oauth(req, res);
-  } else {
-    return res.status(400).json({ message: 'Not Authorized' });
-  }
-});
+// router.get('/login/success', (req: any, res: Response) => {
+//   if (req.user) {
+//     return authController.sign_in_success_oauth(req, res);
+//   } else {
+//     return res.status(400).json({ message: 'Not Authorized' });
+//   }
+// });
 
 router.get('/login/failed', (req: Request, res: Response) => {
   res.status(401).json({

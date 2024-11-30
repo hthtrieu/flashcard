@@ -1,13 +1,13 @@
-import { Cards } from '@entity/Cards';
-import { UserProgress } from '@entity/UserProgress';
+import { Cards } from '../../entity/Cards';
+import { UserProgress } from '../../entity/UserProgress';
 import { Service } from 'typedi';
-import { NotFoundError } from '@src/core/ApiError';
-import { Sets } from '@src/entity/Sets';
-import { User } from '@src/entity/User';
+import { NotFoundError } from '../../core/ApiError';
+import { Sets } from '../../entity/Sets';
+import { User } from '../../entity/User';
 
 import { AppDataSource } from '../../data-source';
 
-@Service()
+Service()
 export class UserProgressService {
   private userRepo;
   private setRepo;

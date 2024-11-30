@@ -1,15 +1,13 @@
 import { Request, Response } from 'express';
-import { Container } from 'typedi';
-import { FailureMsgResponse, SuccessMsgResponse } from '@src/core/ApiResponse';
-import { IUserCardsService } from '@src/services/user-cards/IUserCardsService';
-import { UserCardsService } from '@src/services/user-cards/UserCardsService';
+import { Container, Inject, Service } from 'typedi';
+import { FailureMsgResponse, SuccessMsgResponse } from '../../core/ApiResponse';
+import { IUserCardsService } from '../../services/user-cards/IUserCardsService';
+import { UserCardsService } from '../../services/user-cards/UserCardsService';
 
 export class UserCardsController {
+ 
+  @Inject(() => UserCardsService)
   private service: IUserCardsService;
-  constructor() {
-    this.service = Container.get(UserCardsService);
-  }
-
   // Change 'req' type from 'Request' to 'data' after verifyToken middleware, (user id)
   createCard = async (req: any, res: Response): Promise<any> => {
     const data = {

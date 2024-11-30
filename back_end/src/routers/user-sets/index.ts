@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { UserSetsController } from '@src/controllers/user-sets/UserSetsController';
-import { QuickCreateSetRequest } from '@src/dto/uset-sets/QuickCreateSetRequest';
-import { AsyncHandler } from '@src/helper/AsyncHandler';
-import { UploadFile } from '@middleware/UploadFile';
-import isValidRequest from '@middleware/ValidRequest';
-import isValidKey from '@middleware/VerifyApiKey';
-import verifyToken from '@middleware/VerifyToken';
-import VocabularySetController from '@controllers/vocabulary-set/VocabSetController';
+import { UserSetsController } from '../../controllers/user-sets/UserSetsController';
+import { QuickCreateSetRequest } from '../../dto/uset-sets/QuickCreateSetRequest';
+import { AsyncHandler } from '../../helper/AsyncHandler';
+import { UploadFile } from '../../middleware/UploadFile';
+import isValidRequest from '../../middleware/ValidRequest';
+import isValidKey from '../../middleware/VerifyApiKey';
+import verifyToken from '../../middleware/VerifyToken';
+import VocabularySetController from '../../controllers/vocabulary-set/VocabSetController';
 
 const controller = new UserSetsController();
 const setController = new VocabularySetController();

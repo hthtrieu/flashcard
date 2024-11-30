@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { AsyncHandler } from '@src/helper/AsyncHandler';
-import { isAdmin } from '@middleware/isAdmin';
-import { UploadFile } from '@middleware/UploadFile';
-import isValidRequest from '@middleware/ValidRequest';
-import isValidKey from '@middleware/VerifyApiKey';
-import verifyToken from '@middleware/VerifyToken';
-import VocabularySetController from '@controllers/vocabulary-set/VocabSetController';
+import { AsyncHandler } from '../../helper/AsyncHandler';
+import { isAdmin } from '../../middleware/isAdmin';
+import { UploadFile } from '../../middleware/UploadFile';
+import isValidRequest from '../../middleware/ValidRequest';
+import isValidKey from '../../middleware/VerifyApiKey';
+import verifyToken from '../../middleware/VerifyToken';
+import VocabularySetController from '../../controllers/vocabulary-set/VocabSetController';
 
 const router = Router();
 const vocabSetController = new VocabularySetController();

@@ -1,7 +1,7 @@
-import { Cards } from '@entity/Cards';
-import { TestQuestion } from '@entity/TestQuestion';
-import { Tests } from '@entity/Tests';
-import { UserProgress } from '@entity/UserProgress';
+import { Cards } from '../../entity/Cards';
+import { TestQuestion } from '../../entity/TestQuestion';
+import { Tests } from '../../entity/Tests';
+import { UserProgress } from '../../entity/UserProgress';
 import { Service } from 'typedi';
 import { IsNull, Not } from 'typeorm';
 import {
@@ -13,15 +13,15 @@ import {
   InternalError,
   NoDataError,
   NotFoundError,
-} from '@src/core/ApiError';
-import { Constants } from '@src/core/Constant';
-import { Sets } from '@src/entity/Sets';
-import { TestResultDetails } from '@src/entity/TestResultDetails';
-import { User } from '@src/entity/User';
+} from '../../core/ApiError';
+import { Constants } from '../../core/Constant';
+import { Sets } from '../../entity/Sets';
+import { TestResultDetails } from '../../entity/TestResultDetails';
+import { User } from '../../entity/User';
 
 import { AppDataSource } from '../../data-source';
 
-@Service()
+Service()
 export class UserTestService {
   private userRepo;
   private setRepo;

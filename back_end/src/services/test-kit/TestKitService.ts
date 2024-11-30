@@ -1,13 +1,14 @@
 import Container, { Service } from 'typedi';
-import { BadRequestError, NotFoundError } from '@src/core/ApiError';
-import { Constants } from '@src/core/Constant';
-import { AppDataSource } from '@src/data-source';
-import { Sets } from '@src/entity/Sets';
-import { TestKits } from '@src/entity/TestKit';
-import { TestQuestion } from '@src/entity/TestQuestion';
-import { User } from '@src/entity/User';
-import { FirebaseUpload } from '@services/upload/FirebaseUpload';
-import { IUploadService } from '@services/upload/IUploadService';
+
+import { BadRequestError, NotFoundError } from '../../core/ApiError';
+import { Constants } from '../../core/Constant';
+import { AppDataSource } from '../../data-source';
+import { Sets } from '../../entity/Sets';
+import { TestKits } from '../../entity/TestKit';
+import { TestQuestion } from '../../entity/TestQuestion';
+import { User } from '../../entity/User';
+import { FirebaseUpload } from '../../services/upload/FirebaseUpload';
+import { IUploadService } from '../../services/upload/IUploadService';
 
 @Service()
 export class TestKitService {

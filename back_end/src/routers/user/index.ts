@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { UserProfileController } from '@src/controllers/user/UserProfileController';
-import { ChangePasswordRequest } from '@src/dto/user/ChangePasswordRequest';
-import { AsyncHandler } from '@src/helper/AsyncHandler';
-import { isAdmin } from '@middleware/isAdmin';
-import { UploadFile } from '@middleware/UploadFile';
-import isValidRequest from '@middleware/ValidRequest';
-import isValidKey from '@middleware/VerifyApiKey';
-import verifyToken from '@middleware/VerifyToken';
+import { UserProfileController } from '../../controllers/user/UserProfileController';
+import { ChangePasswordRequest } from '../../dto/user/ChangePasswordRequest';
+import { AsyncHandler } from '../../helper/AsyncHandler';
+import { isAdmin } from '../../middleware/isAdmin';
+import { UploadFile } from '../../middleware/UploadFile';
+import isValidRequest from '../../middleware/ValidRequest';
+import isValidKey from '../../middleware/VerifyApiKey';
+import verifyToken from '../../middleware/VerifyToken';
 
 const controller = new UserProfileController();
 const router = Router();

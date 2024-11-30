@@ -8,23 +8,22 @@ import {
   ForbiddenError,
   InternalError,
   NotFoundError,
-} from '@src/core/ApiError';
+} from '../../core/ApiError';
 import {
   FailureMsgResponse,
   FailureResponse,
   SuccessMsgResponse,
   SuccessResponse,
-} from '@src/core/ApiResponse';
-import { createNewSetAndCardsRequest, UpdateSetRequest } from '@src/dto/set';
-import { GetAllPublicSetRequest } from '@src/dto/set/GetAllPublicSetRequest';
-import { IVocabularySetService } from '@services/vocabulary-set/IVocabularySetService';
-import VocabularySetService from '@services/vocabulary-set/VocabularySetService';
+} from '../../core/ApiResponse';
+import { createNewSetAndCardsRequest, UpdateSetRequest } from '../../dto/set';
+import { GetAllPublicSetRequest } from '../../dto/set/GetAllPublicSetRequest';
+import { IVocabularySetService } from '../../services/vocabulary-set/IVocabularySetService';
+import VocabularySetService from '../../services/vocabulary-set/VocabularySetService';
 
 class VocabularySetController {
+  
+ @Inject(() => VocabularySetService)
   private service: IVocabularySetService;
-  constructor() {
-    this.service = Container.get(VocabularySetService);
-  }
 
   get_all_public_sets = async (req: Request, res: Response): Promise<any> => {
     const query: GetAllPublicSetRequest = {
