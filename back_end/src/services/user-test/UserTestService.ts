@@ -21,7 +21,7 @@ import { User } from '../../entity/User';
 
 import { AppDataSource } from '../../data-source';
 
-Service()
+@Service()
 export class UserTestService {
   private userRepo;
   private setRepo;

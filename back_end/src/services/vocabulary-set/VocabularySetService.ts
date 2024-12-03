@@ -29,7 +29,7 @@ import { VocabularySetRepo } from '../../repositories/vocabulary-set/VocabularyS
 
 import { IVocabularySetService } from './IVocabularySetService';
 
-Service()
+@Service()
 class VocabularySetService implements IVocabularySetService {
   private setRepo: IVocabularySetRepo;
   private cardRepo: IVocabularyCardRepo;

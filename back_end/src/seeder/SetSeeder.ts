@@ -1,22 +1,27 @@
-import { Container } from 'typedi';
+import { Container, Inject } from 'typedi';
 import { DataSource } from 'typeorm';
 import { Seeder, SeederFactoryManager } from 'typeorm-extension';
 
 import { Constants } from '../core/Constant';
 import { Cards } from '../entity/Cards';
 import { Sets } from '../entity/Sets';
-import { TestKits } from '../entity/TestKit';
-import { TestQuestion } from '../entity/TestQuestion';
-import { FirebaseUpload } from '../services/upload/FirebaseUpload';
+// import { TestKits } from '../entity/TestKit';
+// import { TestQuestion } from '../entity/TestQuestion';
+// import { FirebaseUpload } from '../services/upload/FirebaseUpload';
 import { IUploadService } from '../services/upload/IUploadService';
 import setJson from './json/set.json';
+import { S3Upload } from '..//services/upload/S3Upload';
 
 export class SetSeeder implements Seeder {
   private uploadService: IUploadService;
   constructor() {
-    this.uploadService = Container.get(FirebaseUpload);
+    this.uploadService = Container.get(S3Upload);
   }
-
+//  @Inject(() => S3Upload)
+  // private uploadService: S3Upload;
+  // constructor(){
+  //   this.uploadService= new S3Upload();
+  // }
   async run(
     dataSource: DataSource,
     factoryManager: SeederFactoryManager,
@@ -42,7 +47,10 @@ export class SetSeeder implements Seeder {
           mimetype: 'image/*',
         });
         const image_url = image_uploaded;
+        console.log('Uploaded image URL:', image_url);
+
         newSet.image = image_url;
+        
       }
 
       newSet.is_public = set.is_public;

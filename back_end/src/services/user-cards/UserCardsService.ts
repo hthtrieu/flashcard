@@ -20,7 +20,7 @@ import { VocabularySetRepo } from '../../repositories/vocabulary-set/VocabularyS
 
 import { IUserCardsService } from './IUserCardsService';
 
-Service()
+@Service()
 export class UserCardsService implements IUserCardsService {
   private cardRepo: IVocabularyCardRepo;
   private setRepo: IVocabularySetRepo;

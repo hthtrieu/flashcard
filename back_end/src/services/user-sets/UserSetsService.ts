@@ -40,7 +40,7 @@ import { VocabularySetRepo } from '../../repositories/vocabulary-set/VocabularyS
 
 import { IUserSetsService } from './IUserSetsService';
 
-Service()
+@Service()
 export class UserSetsService implements IUserSetsService {
   private userSetsRepo: IUserSetsRepo;
   private userRepo: UserRepoInterface;

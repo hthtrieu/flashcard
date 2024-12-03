@@ -7,7 +7,7 @@ import { User } from '../../entity/User';
 
 import { AppDataSource } from '../../data-source';
 
-Service()
+@Service()
 export class UserProgressService {
   private userRepo;
   private setRepo;

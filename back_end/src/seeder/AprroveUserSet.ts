@@ -7,15 +7,15 @@ import { Cards } from '../entity/Cards';
 import { Sets } from '../entity/Sets';
 import { User } from '../entity/User';
 import { hasingPassword } from '../helper/HashingPassword';
-import { FirebaseUpload } from '../services/upload/FirebaseUpload';
+// import { FirebaseUpload } from '../services/upload/FirebaseUpload';
 import { IUploadService } from '../services/upload/IUploadService';
 import setJson from './json/approveUserSet.json';
-
+import { S3Upload } from '..//services/upload/S3Upload';
 export class ApproveUserSet implements Seeder {
   private uploadService: IUploadService;
 
   constructor() {
-    this.uploadService = Container.get(FirebaseUpload);
+    this.uploadService = Container.get(S3Upload);
   }
 
   async run(

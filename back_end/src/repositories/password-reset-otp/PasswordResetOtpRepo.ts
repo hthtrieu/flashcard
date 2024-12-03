@@ -6,7 +6,7 @@ import { User } from '../../entity/User';
 import { genOTP } from '../../helper/GenerateOTP';
 import { IPasswordResetOtpRepo } from './IPasswordResetOtpRepo';
 
-Service()
+@Service()
 export class PasswordResetOtpRepo implements IPasswordResetOtpRepo {
   private otpDataSource = AppDataSource.getRepository(PasswordResetOtps);
   private userDataSource = AppDataSource.getRepository(User);

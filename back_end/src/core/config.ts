@@ -13,10 +13,14 @@ export const firebaseConfig = {
 };
 
 export const s3Config = {
-  region: String(process.env.AWS_S3_BUCKGET_REGION),
-  accessKeyId: String(process.env.AWS_S3_ACCESS_KEY_ID),
-  secretAccessKey: String(process.env.AWS_S3_SECRET_ACCESS_KEY),
-  bucketName: String(process.env.AWS_S3_BUCKGET_NAME),
+  accessKey: process.env.AWS_S3_ACCESS_KEY_ID as string,
+  secretKey: process.env.AWS_S3_SECRET_ACCESS_KEY as string,
+  bucketName: process.env.AWS_S3_BUCKET_NAME as string,
+  bucketRegion: process.env.AWS_S3_BUCKET_REGION as string,
+  //minio
+  endPoint: String(process.env.MINIO_ENDPOINT) as string,
+  port: Number(process.env.MINIO_PORT) as number,
+  useSSL: Boolean(process.env.useSSL) || false,
 };
 
 export const tokenConfig = {

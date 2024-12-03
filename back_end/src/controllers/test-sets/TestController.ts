@@ -9,12 +9,12 @@ import {
 import { TestService } from '../../services/test-sets/TestService';
 
 export class TestController {
-  // private testService: TestService;
-  // constructor() {
-  //   this.testService = Container.get(TestService);
-  // }
-  @Inject(() => TestService)
   private testService: TestService;
+  constructor() {
+    this.testService = Container.get(TestService);
+  }
+  // @Inject(() => TestService)
+  // private testService: TestService;
   autoCreateTestSet = async (req: any, res: Response): Promise<any> => {
     const setId = req.body.setId;
     const data = {

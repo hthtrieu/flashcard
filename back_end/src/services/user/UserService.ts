@@ -19,7 +19,7 @@ import UserRepoInterface from '../../repositories/user/UserRepoInterface';
 
 import { UserServiceInterface } from './UserServiceInterface';
 
-Service()
+@Service()
 export class UserService implements UserServiceInterface {
   private userRepo: UserRepoInterface;
   private userSetsRepo: IUserSetsRepo;

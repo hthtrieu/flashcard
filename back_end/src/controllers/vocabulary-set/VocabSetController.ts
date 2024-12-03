@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Container, Inject } from 'typedi';
+import { Container, Inject, Service } from 'typedi';
 import {
   ApiError,
   AuthFailureError,
@@ -20,10 +20,16 @@ import { GetAllPublicSetRequest } from '../../dto/set/GetAllPublicSetRequest';
 import { IVocabularySetService } from '../../services/vocabulary-set/IVocabularySetService';
 import VocabularySetService from '../../services/vocabulary-set/VocabularySetService';
 
+// @Service()
 class VocabularySetController {
   
- @Inject(() => VocabularySetService)
+  // @Inject(() => VocabularySetService)
+  // private service: IVocabularySetService;
   private service: IVocabularySetService;
+  constructor(){
+    this.service = Container.get(VocabularySetService)
+  }
+
 
   get_all_public_sets = async (req: Request, res: Response): Promise<any> => {
     const query: GetAllPublicSetRequest = {

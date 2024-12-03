@@ -7,7 +7,7 @@ import { User } from '../../entity/User';
 import { UserProgress } from '../../entity/UserProgress';
 import { IUserSetsRepo } from './IUserSetsRepo';
 
-Service()
+@Service()
 export class UserSetsRepo implements IUserSetsRepo {
   private userDataSource = AppDataSource.getRepository(User);
   private setDataSource = AppDataSource.getRepository(Sets);

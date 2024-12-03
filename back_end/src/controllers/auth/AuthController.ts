@@ -19,12 +19,12 @@ import AuthService from '../../services/auth/AuthService';
 import AuthServiceInterface from '../../services/auth/AuthServiceInterface';
 
 class AuthController {
-  // private authService: AuthServiceInterface;
-  // constructor() {
-  //   this.authService = Container.get(AuthService);
-  // }
-  @Inject(() => AuthService)
   private authService: AuthServiceInterface;
+  constructor() {
+    this.authService = Container.get(AuthService);
+  }
+  // @Inject(() => AuthService)
+  // private authService: AuthServiceInterface;
 
   sign_in = async (req: Request, res: Response): Promise<any> => {
     const data: SignInRequestType = req.body;

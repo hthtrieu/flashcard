@@ -46,7 +46,7 @@ function getRandomElements<T>(
   return result;
 }
 
-Service()
+@Service()
 export class TestService {
   private userRepo;
   private setRepo;

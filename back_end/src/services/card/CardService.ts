@@ -19,6 +19,7 @@ import { VocabularySetRepo } from '../../repositories/vocabulary-set/VocabularyS
 import { FirebaseUpload } from '../../services/upload/FirebaseUpload';
 import { IUploadService } from '../../services/upload/IUploadService';
 import { ICardService } from './ICardService';
+import { S3Upload } from '../upload/S3Upload';
 
 @Service()
 export class CardService implements ICardService {
@@ -31,7 +32,7 @@ export class CardService implements ICardService {
     this.cardRepo = Container.get(VocabularyCardRepo);
     this.setRepo = Container.get(VocabularySetRepo);
     this.userRepo = Container.get(UserRepo);
-    this.uploadService = Container.get(FirebaseUpload);
+    this.uploadService = Container.get(S3Upload);
   }
   CreateCard = async (data: CreateCardDataRequest): Promise<Cards | null> => {
     const image = data.image;

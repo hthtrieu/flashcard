@@ -38,7 +38,7 @@ import AuthServiceInterface from './AuthServiceInterface';
 
 dotenv.config();
 
-Service()
+@Service()
 class AuthService implements AuthServiceInterface {
   private userRepo: UserRepoInterface;
   constructor() {
